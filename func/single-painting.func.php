@@ -5,7 +5,6 @@
 
 //--------Single Paintings Functions PHP Page----------
 include 'db.func.php';
-
 function makeImage($get){
 			$pdo = connectDB();	
 			$result = $pdo->query("SELECT * FROM paintings WHERE paintingID =".$get.";");
