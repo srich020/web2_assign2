@@ -4,6 +4,9 @@
 //COMP 3512 Fall 2016 
 
 //--------Browse Genres PHP Page----------
+// function __autoload($class) {
+//     include 'classes/' . $class . '.class.php';
+// }
 include './inc/header.inc.php';
 include "./func/db.func.php";
 ?>
