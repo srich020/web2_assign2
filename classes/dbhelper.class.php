@@ -5,13 +5,14 @@ class DBHelper{
 	//this function is only here until we decide where to put the actual call to the pdo
 public static function createConnection($value=Array()){
 	try{
-	$pdo = new PDO(value[0],value[1],value[2]);//connection needs array with the connection values in it (HOST, USER, PASSWORD)
+	$pdo = new PDO($value[0],$value[1],$value[2]);//connection needs array with the connection values in it (HOST, USER, PASSWORD)
 	$pdo->setAttribute(PDO:: ATTR_ERRMODE, PDO:: ERRMODE_EXCEPTION);
 	return $pdo;
 	}catch(PDOException $ex){
 		die($ex->getMessage());
 	}
 }
+
 public static function runQuery($pdo,$sql,$parameters=Array()){
 	if(!is_array($parameters)){
 		$parameters = Array($parameters);

@@ -4,11 +4,11 @@
 //COMP 3512 Fall 2016 
 
 //--------Browse Genres PHP Page----------
-// function __autoload($class) {
-//     include 'classes/' . $class . '.class.php';
-// }
+
 include './inc/header.inc.php';
-include "./func/db.func.php";
+include './classes/AutoLoader.php';
+$i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
+$pdo = DBHelper::createConnection($i);
 ?>
 
 <div class="banner-container">
@@ -23,9 +23,9 @@ include "./func/db.func.php";
 <div class="ui six column grid">
 
 <?php
+$i = new Reusable();
 $query = "SELECT * FROM Genres ORDER BY EraID, GenreName;";
-echo makeCards($query,0);//in db.func.php
-
+echo $i->makeCards($query,0,$pdo);
 echo '</div>
 </div>';
 

@@ -6,10 +6,9 @@
 //--------Browse Paintings PHP Page----------
  
 include './inc/header.inc.php';
-include 'func/browse-paintings.func.php';
-include_once 'func/db.func.php';
-
-
+include './classes/AutoLoader.php';
+$i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
+$pdo = DBHelper::createConnection($i);
 ?>
 
 <html>
@@ -25,7 +24,6 @@ include_once 'func/db.func.php';
 				<option value="0">Select Artist</option>
 
 <?php
-				$pdo = connectDB();
 				$query = "SELECT FirstName,LastName,ArtistID from Artists;";
 				$result = $pdo->query($query);
 				while($row=$result->fetch()){
@@ -81,31 +79,32 @@ include_once 'func/db.func.php';
 			}
 			echo '<div class="ui hidden divider"></div>
 			<div class="ui items">';
-			
+			$browse = new BrowsePainting();
 			if(!isset($_GET)||empty($_GET)){
 				$query = "SELECT * from Paintings JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) ORDER BY RAND() LIMIT 20;";
-				echo browsePaintings($query, $pdo);
+				echo $browse->browsePaintings($query, $pdo);
 				}else if(isset($_GET["artist"]) && $_GET["artist"]!=0){
 				$query = "SELECT * from Paintings JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) WHERE Paintings.ArtistID =".$_GET["artist"].";";
-				echo browsePaintings($query, $pdo);	
+				echo $browse->browsePaintings($query, $pdo);	
 				}else if(isset($_GET["museum"])&& $_GET["museum"]!=0){
 				$query = "SELECT * from Paintings 
 				JOIN Galleries ON (Paintings.GalleryID = Galleries.GalleryID)
 				JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)	
 				WHERE Paintings.GalleryID =".$_GET["museum"].";";
-				echo browsePaintings($query, $pdo);
+				echo $browse->browsePaintings($query, $pdo);
 				}else if(isset($_GET["shape"])&& $_GET["shape"]!=0){
 				$query = "SELECT * from Paintings 
 				JOIN Galleries ON (Paintings.GalleryID = Galleries.GalleryID)
 				JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)
 				JOIN Shapes ON (Paintings.ShapeID = Shapes.ShapeID)	
 				WHERE Paintings.ShapeID =".$_GET["shape"].";";
-				echo browsePaintings($query, $pdo);
+				echo $browse->browsePaintings($query, $pdo);
 				}else{
 				$query = "SELECT * from Paintings JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) LIMIT 20;";
-				echo browsePaintings($query, $pdo);
+				echo $browse->browsePaintings($query, $pdo);
 				}				
 				echo '</div></div></body></html>';
 				include "./inc/footer.inc.php";
+				$pdo = null;
 			?>
 			

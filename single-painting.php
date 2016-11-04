@@ -5,7 +5,11 @@
 
 //--------Single Paintings PHP Page----------
 include './inc/header.inc.php';
-include_once 'func/single-painting.func.php';
+include './classes/AutoLoader.php';
+$i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
+$pdo = DBHelper::createConnection($i);
+$painting = new SinglePainting();
+$reuse = new Reusable();
 ?>
 
 <body>
@@ -14,9 +18,9 @@ include_once 'func/single-painting.func.php';
 		<section class="ui segment grey100">
 			<div class="ui doubling stackable grid container">
 
-				<div class="nine wide column">';
+				<div class="nine wide column">
 
-					<?php 
+					<?php
 			$get = null;		
 			if(!isset($_GET['id'])||empty($_GET['id'])||!is_numeric($_GET["id"])){
 				$get = 25;
@@ -24,11 +28,9 @@ include_once 'func/single-painting.func.php';
 				$get = $_GET["id"];
 			}
 			
-			echo makeImage($get);
+			echo $painting->makeImage($get,$pdo);
 
 			echo	'<div class="seven wide column">';
-
-			$pdo = connectDB();
 			$result = $pdo->query("SELECT paintings.*,galleries.*,artists.* FROM paintings 
 			RIGHT JOIN Galleries ON (Paintings.GalleryID = Galleries.GalleryID) 
             JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)
@@ -168,12 +170,11 @@ $result = $pdo->query("SELECT Genres.GenreName,PaintingGenres.GenreID FROM paint
 						<div class="ui form">
 							<div class="ui tiny statistic">
 								<div class="value">
-									<?php						  
-				$pdo = null;	
-			echo shoppingCart($get);
-            echo makeFilter("TypesFrames","Frame");                
-			echo makeFilter("TypesGlass","Glass");
-			echo makeFilter("TypesMatt","Matt");						
+									<?php						  	
+			echo $painting->shoppingCart($get,$pdo);
+            echo $reuse->makeFilter("TypesFrames","Frame",$pdo);                
+			echo $reuse->makeFilter("TypesGlass","Glass",$pdo);
+			echo $reuse->makeFilter("TypesMatt","Matt",$pdo);						
                                  
 ?>
 								</div>                     
@@ -208,7 +209,7 @@ $result = $pdo->query("SELECT Genres.GenreName,PaintingGenres.GenreID FROM paint
 					<div class="ui bottom attached active tab segment" data-tab="first">
 
 						<?php
-			echo makeBottomTable($get);
+			echo $painting->makeBottomTable($get,$pdo);
 			?>
 					</div>   <!-- END Reviews Tab -->          
 

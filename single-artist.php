@@ -7,6 +7,7 @@
 include './inc/header.inc.php';
 include "./func/db.func.php";
 include './func/single-artist.func.php';
+include './classes/AutoLoader.php';
 ?>
 
 <body><main><div class="ui container">
