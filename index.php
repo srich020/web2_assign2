@@ -6,10 +6,7 @@
 //--------Index PHP Page----------
 
 include './inc/header.inc.php';
-
-// $yay = new SingleArtist();
-// $yay->makeArtistHeader(null);?>
-
+?>
 <body>
 <div class="hero-container">
     <div class="ui text container">

@@ -3,21 +3,20 @@
 //Assignment 1
 //COMP 3512 Fall 2016 
 
-//--------Single Artist Function PHP Page----------
+//--------Single Artist Function PHP Page---------
+$i = null;
 class SingleArtist{
 
-function makeArtistHeader($query){
-$pdo = connectDB();	
-$result = $pdo->query($query);
-$string = "";
+function makeArtistHeader($parameters,$pdo){
+$i = $pdo;
+$SingleArtistDB = new ArtistDB($i);
+$result = $SingleArtistDB->findByID($parameters);
 $row = $result->fetch();
-$string .= 
-'<div class="ui hidden divider"></div>
+echo '<div class="ui hidden divider"></div>
 				<div class="ui container"> 
 					<div class="ui items">
 						<div class="item">
-							<div class="image">
-								<img src="./images/art/artists/square-medium/'.$row["ArtistID"].'.jpg">
+							<div class="image">	<img src="./images/art/artists/square-medium/'.$row["ArtistID"].'.jpg">
 								</div>
 								<div class="content">
 									<div class="ui top attached tabular menu">
@@ -62,16 +61,10 @@ $string .=
 											</tbody>
 										</table>
 									</div>
-									<div class="ui bottom attached tab segment" data-tab="second">
-  '.utf8_encode($row["Details"]).'
-									</div>
+									<div class="ui bottom attached tab segment" data-tab="second">'.utf8_encode($row["Details"]).'</div>
 								</div>
-							</div>
-							<div class="ui hidden divider"></div>
-							<h2>Paintings</h2>
-							<div class="ui divider"></div>';
-	$pdo = null;
-	return $string;
+							</div><div class="ui hidden divider"></div><h2>Paintings</h2><div class="ui divider"></div>';
 }
 }
+	
 ?>

@@ -1,5 +1,5 @@
 <?php
-include_once 'AbstractDB.php';
+include_once 'AbstractDB.class.php';
 class ArtistDB extends AbstractDB{
 	protected function getSelect(){
 		return 'Select ArtistID,FirstName,LastName,Nationality,Gender,YearOfBirth,YearOfDeath,Details,ArtistLink from Artists ';

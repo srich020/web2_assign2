@@ -4,23 +4,26 @@
 //COMP 3512 Fall 2016 
 
 //--------Browse Genres PHP Page----------
-class BrowseGenres{
-function ensureSafety($get,$pdo){
+
+class BrowseGenres{	
+public $i = null;
+function ensureSet($get,$pdo){
+	$i = $pdo;
+	$genreDB = new GenreDB($i);
 	$string = "";
 	if(!isset($get)||empty($get)){
 	$query = "SELECT * FROM Genres WHERE GenreID = ?;";
-	$string .= $this->makeGenreHeader($query,1,$pdo);
+	$string .= $this->makeGenreHeader(1,$i);
 	}else{
 	$query = "SELECT * FROM Genres WHERE GenreID = ?;";
-	$string .= $this->makeGenreHeader($query,$get['id'],$pdo);
+	$string .= $this->makeGenreHeader($get['id'],$i);
 	}
 	return $string;
 }
 
-function makeGenreHeader($query,$get,$pdo){	
-	$result = $pdo->prepare($query);
-	$result-> bindValue(1,$get);
-	$result-> execute();
+function makeGenreHeader($parameter,$i){	
+	$genreDB = new GenreDB($i);
+	$result = $genreDB->findByID($parameter);
 	$string = "";
 	$row = $result->fetch();
 	$string .= 

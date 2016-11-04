@@ -1,5 +1,5 @@
 <?php
-include_once 'dbhelper.php';
+include_once 'DBHelper.class.php';
 abstract class AbstractDB{
 	abstract protected function getSelect();
 	abstract protected function getKeyFieldName();
@@ -16,7 +16,7 @@ abstract class AbstractDB{
 	}
 	public function findByID($id){
 		$sql = $this->getSelect().' where '.$this->getKeyFieldName().' =?';
-		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array[$id]);
+		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
 		return $statement;
 	}	
 }

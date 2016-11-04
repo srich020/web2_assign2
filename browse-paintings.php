@@ -9,6 +9,7 @@ include './inc/header.inc.php';
 include './classes/AutoLoader.php';
 $i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
 $pdo = DBHelper::createConnection($i);
+$PaintingDB = new PaintingDB($pdo)
 ?>
 
 <html>
@@ -66,12 +67,7 @@ $pdo = DBHelper::createConnection($i);
 			<div class="ui hidden divider"></div>
 			<?php
 			if(isset($_GET["artist"]) && $_GET["artist"]!=0){
-				$sql = "SELECT FirstName, LastName from Paintings 
-				JOIN Artists ON(Paintings.ArtistID = Artists.ArtistID) 
-				WHERE Artists.ArtistID =?;";
-				$result = $pdo->prepare($sql);
-				$result->bindValue(1,$_GET["artist"]);
-				$result->execute();
+				$result = $PaintingDB->findByID($_GET["artist"]);
 				$row=$result->fetch();
 				echo '<p><b>ARTIST = '.$row["FirstName"].' '.$row["LastName"].'</b></p>';
 			}else{

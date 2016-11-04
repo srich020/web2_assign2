@@ -15,11 +15,11 @@ $pdo = DBHelper::createConnection($i);
 
 <div class="ui container">
 <div class="ui six column grid">
-<div class="ui hidden divider"></div>';
+<div class="ui hidden divider"></div>
 <?php
 	$i = new BrowseGenres();
 	$query = "Select * From Genres";
-	echo $i->ensureSafety($_GET,$pdo);
+	echo $i->ensureSet($_GET,$pdo);
 	echo '<div class="ui container">
 	<div class="ui six column grid">';
 	$a = new Reusable();
