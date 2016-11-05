@@ -9,7 +9,7 @@ include './classes/AutoLoader.php';
 $i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
 $pdo = DBHelper::createConnection($i);
 $artist = new SingleArtist();
-$reuse = new Reusable();
+$reuse = new Reusable($pdo);
 ?>
 
 <body><main><div class="ui container">

@@ -10,5 +10,8 @@ class GenreDB extends AbstractDB{
 	public function __construct($connect){
 		parent::__construct($connect);
 	}
+	public function runQuery(){
+		$hi = null;
+	}
 }
 ?>

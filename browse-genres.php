@@ -23,7 +23,7 @@ $pdo = DBHelper::createConnection($i);
 <div class="ui six column grid">
 
 <?php
-$i = new Reusable();
+$i = new Reusable($pdo);
 $query = "SELECT * FROM Genres ORDER BY EraID, GenreName;";
 echo $i->makeCards($query,0,$pdo);
 echo '</div>

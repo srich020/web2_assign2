@@ -22,7 +22,7 @@ $pdo = DBHelper::createConnection($i);
 	echo $i->ensureSet($_GET,$pdo);
 	echo '<div class="ui container">
 	<div class="ui six column grid">';
-	$a = new Reusable();
+	$a = new Reusable($pdo);
 	if(!isset($_GET)||empty($_GET)||!is_numeric($_GET["id"])){
 	$query = "SELECT paintings.paintingID, ImageFileName FROM paintings JOIN paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID) WHERE GenreID = 1;";
 	echo $a->MakeCards($query,2,$pdo);

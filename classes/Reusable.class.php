@@ -6,11 +6,11 @@
 //--------Overall functions page----------
 
 //this is used in more than one page to generate card divs
-class Reusable{
+include_once 'AbstractDB.class.php';
+class Reusable extends AbstractDB{
 function makeCards($query,$i,$pdo){
 	$result = $pdo->query($query);
 	$string = "";
-	
 	while($row=$result->fetch()){
 	$string .= '<div class="column">';
 
@@ -51,5 +51,14 @@ function makeCards($query,$i,$pdo){
                             </div>';
 		return $string;
 }
+	protected function getSelect(){
+		return 'null';
+	}
+	protected function getKeyFieldName(){
+		return 'null';
+	}
+		public function __construct($connect){
+		parent::__construct($connect);
+	}
 }
 ?>

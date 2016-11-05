@@ -47,8 +47,7 @@ function makeGenreHeader($parameter,$i){
 				</div>
 				<div class="ui hidden divider"></div>
 				<h2>Paintings</h2>
-				<div class="ui divider"></div>';
-	$pdo = null;			
+				<div class="ui divider"></div>';		
 	return $string;
 }
 

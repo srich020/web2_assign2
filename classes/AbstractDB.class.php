@@ -19,5 +19,10 @@ abstract class AbstractDB{
 		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
 		return $statement;
 	}	
+	public function findByIDandJoin($field,$join,$id){
+		$sql = 'SELECT '.$field.' '.$join.' where '.$this->getKeyFieldName().' =?';
+		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
+		return $statement;
+	}
 }
 ?>
