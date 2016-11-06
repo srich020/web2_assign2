@@ -10,6 +10,7 @@ $i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
 $pdo = DBHelper::createConnection($i);
 $artist = new SingleArtist();
 $reuse = new Reusable($pdo);
+$artistDB = new ArtistDB($pdo)
 ?>
 
 <body><main><div class="ui container">
@@ -27,18 +28,13 @@ $reuse = new Reusable($pdo);
 	</div>';
 	echo '<div class="ui container">
 	<div class="ui six column grid">';
-	
-	$query = "SELECT paintings.paintingID, ImageFileName 
-	FROM paintings 
-	JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)
-	WHERE Artists.ArtistID = ";
-	
 	if(!isset($_GET)||empty($_GET)||!is_numeric($_GET["id"])){
-	$query .= "1;";
-	echo $reuse->MakeCards($query,2,$pdo);
+	$statement = $artistDB->findByIDandJoin('paintings.paintingID, ImageFileName FROM paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)',1);
+	echo $reuse->MakeCards($statement,2);
 	}else{
-	$query .= $_GET["id"].";";
-	echo $reuse->MakeCards($query,2,$pdo);}
+	$statement = $artistDB->findByIDandJoin('paintings.paintingID, ImageFileName FROM paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)',$_GET["id"]);
+	echo $reuse->MakeCards($statement,2);
 	echo '</div></div></main></body>';
+	}
 	include "./inc/footer.inc.php";
 ?>

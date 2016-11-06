@@ -5,10 +5,11 @@
 
 //--------Browse Paintings Function PHP Page----------
 class BrowsePainting{
-function browsePaintings($query, $pdo){
-	$toReturn = "";
-	$result = $pdo->query($query);
-				while($row=$result->fetch()){
+function browsePaintings($result){
+	// $painting = new PaintingDB($pdo);
+$toReturn = "";
+	// $result = $pdo->query($query);
+while($row=$result->fetch()){
 	$toReturn.= '
 <div class="item">
 	<div class="image">
@@ -36,7 +37,6 @@ function browsePaintings($query, $pdo){
 	<div class="ui divider"></div>';
 
 	}
-		$pdo = null;
 		return $toReturn;
 	}
 }

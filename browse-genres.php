@@ -24,8 +24,9 @@ $pdo = DBHelper::createConnection($i);
 
 <?php
 $i = new Reusable($pdo);
-$query = "SELECT * FROM Genres ORDER BY EraID, GenreName;";
-echo $i->makeCards($query,0,$pdo);
+$genre = new GenreDB($pdo);
+$statement = $genre->orderBy('EraID, GenreName');
+echo $i->makeCards($statement,0);
 echo '</div>
 </div>';
 

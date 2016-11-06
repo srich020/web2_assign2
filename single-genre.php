@@ -18,17 +18,18 @@ $pdo = DBHelper::createConnection($i);
 <div class="ui hidden divider"></div>
 <?php
 	$i = new BrowseGenres();
+	$genre = new GenreDB($pdo);
 	$query = "Select * From Genres";
 	echo $i->ensureSet($_GET,$pdo);
 	echo '<div class="ui container">
 	<div class="ui six column grid">';
 	$a = new Reusable($pdo);
 	if(!isset($_GET)||empty($_GET)||!is_numeric($_GET["id"])){
-	$query = "SELECT paintings.paintingID, ImageFileName FROM paintings JOIN paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID) WHERE GenreID = 1;";
-	echo $a->MakeCards($query,2,$pdo);
+	$statement = $genre->findByIDandJoin('paintings.paintingID, ImageFileName FROM paintings','paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID)',1);
+	echo $a->MakeCards($statement,2);
 	}else{
-	$query = "SELECT paintings.paintingID, ImageFileName FROM paintings JOIN paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID) WHERE GenreID =".$_GET["id"].";";
-	echo $a->MakeCards($query,2,$pdo);
+	$statement = $genre->findByIDandJoin('paintings.paintingID, ImageFileName FROM paintings','paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID)',$_GET["id"]);
+	echo $a->MakeCards($statement,2);
 	}
 	echo '</div></div></div></div></div></div></body>';
 	include "./inc/footer.inc.php";

@@ -8,14 +8,12 @@
 //this is used in more than one page to generate card divs
 include_once 'AbstractDB.class.php';
 class Reusable extends AbstractDB{
-function makeCards($query,$i,$pdo){
-	$result = $pdo->query($query);
+private $connect;
+function makeCards($statement,$i){
 	$string = "";
-	while($row=$result->fetch()){
+	while($row=$statement->fetch()){
 	$string .= '<div class="column">';
-
 			if($i == 0){
-
 			$string .= '
 		<a class="ui card" href="single-genre.php?id='.$row["GenreID"].'">
 			<div class="image">
@@ -33,16 +31,15 @@ function makeCards($query,$i,$pdo){
 			</a>
 		</div>';	
 			}
-
 	}
-	$pdo = null;
 	return $string;
 }
-	function makeFilter($table,$type,$pdo){
+	function makeFilter($table,$type){
 	$string = '<div class="four wide field"><label>'.$type.'</label>
                                 <select id="'.$type.'" class="ui search dropdown">
 								';
-	$result = $pdo->query("SELECT Title from ".$table." ORDER BY ".$type."ID desc;");
+	$sql = "SELECT Title from ".$table." ORDER BY ".$type."ID desc;";
+	$result = DBHelper::runQuery($this->connect,$sql,Array());
 			while($row=$result->fetch()){
 				  $string .='<option>'.utf8_encode($row["Title"]).'</option>';
 			}					
@@ -59,6 +56,7 @@ function makeCards($query,$i,$pdo){
 	}
 		public function __construct($connect){
 		parent::__construct($connect);
+		$this->connect = $connect;
 	}
 }
 ?>

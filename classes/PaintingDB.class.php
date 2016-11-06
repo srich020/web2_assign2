@@ -10,5 +10,10 @@ class PaintingDB extends AbstractDB{
 	public function __construct($connect){
 		parent::__construct($connect);
 	}
+		public function JoinWithOrderBy($join,$order){
+		$sql = 'Select * from Paintings'.' JOIN '.$join.' order by '.$order.';';
+		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($order));
+		return $statement;
+	}
 }
 ?>

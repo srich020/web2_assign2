@@ -9,7 +9,8 @@ include './inc/header.inc.php';
 include './classes/AutoLoader.php';
 $i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
 $pdo = DBHelper::createConnection($i);
-$PaintingDB = new PaintingDB($pdo)
+$paintings = new PaintingDB($pdo);
+$artists = new ArtistDB($pdo);
 ?>
 
 <html>
@@ -25,12 +26,12 @@ $PaintingDB = new PaintingDB($pdo)
 				<option value="0">Select Artist</option>
 
 <?php
-				$query = "SELECT FirstName,LastName,ArtistID from Artists;";
-				$result = $pdo->query($query);
-				while($row=$result->fetch()){
-					
-					echo '<option value="'.$row["ArtistID"].'">'.utf8_encode($row["FirstName"]).' '.utf8_encode($row["LastName"]).'</option>';
+				$artists = new ArtistDB($pdo);
+				$row = $artists->getAll();
+				for($x = 0; $x < count($row);$x++){
+					echo '<option value="'.$row[$x]["ArtistID"].'">'.utf8_encode($row[$x]["FirstName"]).' '.utf8_encode($row[$x]["LastName"]).'</option>';
 				}
+
 				?>
 			</select>
 			<div class="ui hidden divider"></div>
@@ -38,23 +39,25 @@ $PaintingDB = new PaintingDB($pdo)
 			<select name="museum" class="ui fluid dropdown">
 				<option value="0">Select Museum</option>
 				<?php
-				$result = $pdo->query("SELECT GalleryID,GalleryName from Galleries;");
-				while($row=$result->fetch()){
-					
-					echo '<option value="'.$row["GalleryID"].'">'.utf8_encode($row["GalleryName"]).'</option>';
-				}?>
+				$gallery = new GalleryDB($pdo);
+				$row = $gallery->getAll();
+				for($x = 0; $x < count($row);$x++){
+					echo '<option value="'.$row[$x]["GalleryID"].'">'.utf8_encode($row[$x]["GalleryName"]).'</option>';
+				}
+				?>
 			</select>
 			<div class="ui hidden divider"></div>
 			<p><b>Shape</b></p>
 			<select name="shape" class="ui fluid dropdown">
 				<option value="0">Select Shape</option>';
-				
 				<?php
-				$result = $pdo->query("SELECT ShapeID, ShapeName from Shapes;");
-				while($row=$result->fetch()){
+				$shapes = new ShapeDB($pdo);
+				$row = $shapes->getAll();
+				for($x = 0; $x < count($row);$x++){
 					
-					echo '<option value="'.$row["ShapeID"].'">'.utf8_encode($row["ShapeName"]).'</option>';
-				}?>
+					echo '<option value="'.$row[$x]["ShapeID"].'">'.utf8_encode($row[$x]["ShapeName"]).'</option>';
+				}
+				?>
 
 			</select>
 			<div class="ui hidden divider"></div>
@@ -67,7 +70,7 @@ $PaintingDB = new PaintingDB($pdo)
 			<div class="ui hidden divider"></div>
 			<?php
 			if(isset($_GET["artist"]) && $_GET["artist"]!=0){
-				$result = $PaintingDB->findByID($_GET["artist"]);
+				$result = $artists->findByID($_GET["artist"]);
 				$row=$result->fetch();
 				echo '<p><b>ARTIST = '.$row["FirstName"].' '.$row["LastName"].'</b></p>';
 			}else{
@@ -77,30 +80,19 @@ $PaintingDB = new PaintingDB($pdo)
 			<div class="ui items">';
 			$browse = new BrowsePainting();
 			if(!isset($_GET)||empty($_GET)){
-				$query = "SELECT * from Paintings JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) ORDER BY RAND() LIMIT 20;";
-				echo $browse->browsePaintings($query, $pdo);
+				$statement = $paintings->joinWithOrderBy('Artists ON (Paintings.ArtistID = Artists.ArtistID)','RAND() LIMIT 20');
+				echo $browse->browsePaintings($statement);
 				}else if(isset($_GET["artist"]) && $_GET["artist"]!=0){
-				$query = "SELECT * from Paintings JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) WHERE Paintings.ArtistID =".$_GET["artist"].";";
-				echo $browse->browsePaintings($query, $pdo);	
+				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.ArtistID',$_GET["artist"]);
+				echo $browse->browsePaintings($statement);	
 				}else if(isset($_GET["museum"])&& $_GET["museum"]!=0){
-				$query = "SELECT * from Paintings 
-				JOIN Galleries ON (Paintings.GalleryID = Galleries.GalleryID)
-				JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)	
-				WHERE Paintings.GalleryID =".$_GET["museum"].";";
-				echo $browse->browsePaintings($query, $pdo);
+				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.GalleryID',$_GET["museum"]);
+				echo $browse->browsePaintings($statement);
 				}else if(isset($_GET["shape"])&& $_GET["shape"]!=0){
-				$query = "SELECT * from Paintings 
-				JOIN Galleries ON (Paintings.GalleryID = Galleries.GalleryID)
-				JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)
-				JOIN Shapes ON (Paintings.ShapeID = Shapes.ShapeID)	
-				WHERE Paintings.ShapeID =".$_GET["shape"].";";
-				echo $browse->browsePaintings($query, $pdo);
-				}else{
-				$query = "SELECT * from Paintings JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) LIMIT 20;";
-				echo $browse->browsePaintings($query, $pdo);
+				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) JOIN Shapes ON (Paintings.ShapeID = Shapes.ShapeID)','Paintings.ShapeID',$_GET["shape"]);
+				echo $browse->browsePaintings($statement);
 				}				
 				echo '</div></div></body></html>';
 				include "./inc/footer.inc.php";
-				$pdo = null;
 			?>
 			

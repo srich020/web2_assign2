@@ -5,9 +5,17 @@
 
 //--------Single Paintings Functions PHP Page----------
 class SinglePainting{
-function makeImage($get,$pdo){
-			$result = $pdo->query("SELECT * FROM paintings WHERE paintingID =".$get.";");
-			$row = $result->fetch();
+private $artist;
+private $connect;
+private $painting;
+public function __construct($connect){
+$this->connect = $connect;
+$this->artist = new ArtistDB($connect);
+$this->painting = new PaintingDB($connect);
+}
+function makeImage($get){
+			$statement = $this->painting->findByID($get);
+			$row = $statement->fetch();
              return '<img src="./images/art/works/medium/'.$row["ImageFileName"].'.jpg" alt="..." class="ui big image" id="artwork">
                 
                 <div class="ui fullscreen modal">
@@ -21,10 +29,10 @@ function makeImage($get,$pdo){
                
             </div>';
 }
-function shoppingCart($get,$pdo){
+function shoppingCart($get){
 				$string = "";
-				$result = $pdo->query("SELECT * from Paintings WHERE paintings.paintingID =".$get.";");
-			$row = $result->fetch();
+				$statement = $this->painting->findByID($get);
+			$row = $statement->fetch();
 						$string .= '$'.number_format($row["Cost"]);	
                          $string .= '</div>
                         </div>
@@ -33,15 +41,14 @@ function shoppingCart($get,$pdo){
                                 <label>Quantity</label>
                                 <input type="number">
                             </div>';   			
-				$pdo = null;
 				return $string;
 	
 }
 
-function makeBottomTable($get,$pdo){
+function makeBottomTable($get){
 			$string = "";
-			$result = $pdo->query("SELECT * FROM paintings WHERE paintingID =".$get.";");
-			$row = $result->fetch();
+			$statement = $this->painting->findByID($get);
+			$row = $statement->fetch();
             $string .= utf8_encode($row["Description"]). 
             '</div>
 			
@@ -83,9 +90,9 @@ function makeBottomTable($get,$pdo){
 			
             <div class="ui bottom attached tab segment" data-tab="third">                
 				<div class="ui feed">';
-					$result = $pdo->query("SELECT * from Reviews WHERE PaintingID =".$get.";");
-			$row = $result->fetch();
-			while($row=$result->fetch()){
+				$review = new ReviewDB($this->connect);
+					$statement = $review->findByIDWithKey($get,'PaintingID');
+			while($row = $statement->fetch()){
 				$date = date_create($row["ReviewDate"]);
 				 $string .=  '<div class="event">
 					<div class="content">

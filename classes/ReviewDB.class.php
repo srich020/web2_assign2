@@ -1,5 +1,6 @@
 <?php
-include_once 'AbstractDB.php';
+include_once 'AbstractDB.class.php';
+
 class ReviewDB extends AbstractDB{
 	protected function getSelect(){
 		return 'Select RatingID,PaintingID,ReviewDate,Rating,Comment from Reviews ';

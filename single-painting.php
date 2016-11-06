@@ -8,7 +8,8 @@ include './inc/header.inc.php';
 include './classes/AutoLoader.php';
 $i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
 $pdo = DBHelper::createConnection($i);
-$painting = new SinglePainting();
+$painting = new SinglePainting($pdo);
+$paintingdata = new PaintingDB($pdo);
 $reuse = new Reusable($pdo);
 ?>
 
@@ -27,17 +28,15 @@ $reuse = new Reusable($pdo);
 			}else{
 				$get = $_GET["id"];
 			}
-			
-			echo $painting->makeImage($get,$pdo);
-
+//left side
+			echo $painting->makeImage($get);
+//right side
 			echo	'<div class="seven wide column">';
-			$result = $pdo->query("SELECT paintings.*,galleries.*,artists.* FROM paintings 
-			RIGHT JOIN Galleries ON (Paintings.GalleryID = Galleries.GalleryID) 
-            JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)
-			WHERE paintingID =".$get.";");
-			$row = $result->fetch();
+			$statement = $paintingdata->findByIDandJoin('paintings.*,galleries.*,artists.* FROM paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) 
+            JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)',$get);
+			$row = $statement->fetch();
                echo '<div class="item">
-					<h2 class="header">'.$row["Title"].'</h2>
+					<h2 class="header">'.utf8_encode($row["Title"]).'</h2>
 					<h3>'.utf8_encode($row["FirstName"]).' '.utf8_encode($row["LastName"]).'</h3>';?>
 
 					<div class="meta">
@@ -143,12 +142,9 @@ $reuse = new Reusable($pdo);
                     </table>    
                 </div>';    
 
-$result = $pdo->query("SELECT Genres.GenreName,PaintingGenres.GenreID FROM paintings 
-			JOIN PaintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID) 
-            JOIN Genres ON (PaintingGenres.GenreID = Genres.GenreID)
-			WHERE paintings.paintingID =".$get.";");
-			$row = $result->fetch();
-				
+			$statement = $paintingdata->findByIDandJoinWithKField('Genres.GenreName,PaintingGenres.GenreID FROM paintings','PaintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID) JOIN Genres ON (PaintingGenres.GenreID = Genres.GenreID)',
+			'paintings.paintingID',$get);
+			$row = $statement->fetch();
                 echo '<div class="ui bottom attached tab segment" data-tab="genres">
  
                         <ul class="ui list">
@@ -171,10 +167,10 @@ $result = $pdo->query("SELECT Genres.GenreName,PaintingGenres.GenreID FROM paint
 							<div class="ui tiny statistic">
 								<div class="value">
 									<?php						  	
-			echo $painting->shoppingCart($get,$pdo);
-            echo $reuse->makeFilter("TypesFrames","Frame",$pdo);                
-			echo $reuse->makeFilter("TypesGlass","Glass",$pdo);
-			echo $reuse->makeFilter("TypesMatt","Matt",$pdo);						
+			echo $painting->shoppingCart($get);
+            echo $reuse->makeFilter("TypesFrames","Frame");                
+			echo $reuse->makeFilter("TypesGlass","Glass");
+			echo $reuse->makeFilter("TypesMatt","Matt");						
                                  
 ?>
 								</div>                     
@@ -209,7 +205,7 @@ $result = $pdo->query("SELECT Genres.GenreName,PaintingGenres.GenreID FROM paint
 					<div class="ui bottom attached active tab segment" data-tab="first">
 
 						<?php
-			echo $painting->makeBottomTable($get,$pdo);
+			echo $painting->makeBottomTable($get);
 			?>
 					</div>   <!-- END Reviews Tab -->          
 
