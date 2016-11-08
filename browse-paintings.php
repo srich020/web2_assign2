@@ -27,9 +27,9 @@ $artists = new ArtistDB($pdo);
 
 <?php
 				$artists = new ArtistDB($pdo);
-				$row = $artists->getAll();
-				for($x = 0; $x < count($row);$x++){
-					echo '<option value="'.$row[$x]["ArtistID"].'">'.utf8_encode($row[$x]["FirstName"]).' '.utf8_encode($row[$x]["LastName"]).'</option>';
+				$statement = $artists->orderBy("LastName");
+				while($row = $statement->fetch()){
+					echo '<option value="'.$row["ArtistID"].'">'.utf8_encode($row["FirstName"]).' '.utf8_encode($row["LastName"]).'</option>';
 				}
 
 				?>
@@ -40,9 +40,9 @@ $artists = new ArtistDB($pdo);
 				<option value="0">Select Museum</option>
 				<?php
 				$gallery = new GalleryDB($pdo);
-				$row = $gallery->getAll();
-				for($x = 0; $x < count($row);$x++){
-					echo '<option value="'.$row[$x]["GalleryID"].'">'.utf8_encode($row[$x]["GalleryName"]).'</option>';
+				$statement = $gallery->orderBy("GalleryName");
+				while($row = $statement->fetch()){
+					echo '<option value="'.$row["GalleryID"].'">'.utf8_encode($row["GalleryName"]).'</option>';
 				}
 				?>
 			</select>
@@ -52,10 +52,9 @@ $artists = new ArtistDB($pdo);
 				<option value="0">Select Shape</option>';
 				<?php
 				$shapes = new ShapeDB($pdo);
-				$row = $shapes->getAll();
-				for($x = 0; $x < count($row);$x++){
-					
-					echo '<option value="'.$row[$x]["ShapeID"].'">'.utf8_encode($row[$x]["ShapeName"]).'</option>';
+				$statement = $shapes->orderBy("ShapeName");
+				while($row = $statement->fetch()){
+					echo '<option value="'.$row["ShapeID"].'">'.utf8_encode($row["ShapeName"]).'</option>';
 				}
 				?>
 
