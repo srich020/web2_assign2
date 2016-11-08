@@ -7,5 +7,27 @@
 include './inc/header.inc.php';
 include './classes/AutoLoader.php';
 $i = Array("mysql:host=localhost;dbname=art","sadsquad","sadsquad");
-$pdo = DBHelper::createConnection($i);
-echo "Not implemented yet"; ?>
+$pdo = DBHelper::createConnection($i);?>
+
+<div class="banner-container">
+
+ <div class="ui text container">
+        <h1 class="ui huge header">Artists</h1>
+    </div>  
+
+</div>
+
+<div class="ui container">
+<div class="ui six column grid">
+
+<?php
+$i = new Reusable($pdo);
+$artist = new ArtistDB($pdo);
+$statement = $artist->orderBy('LastName');
+echo $i->makeCards($statement,1);
+echo '</div>
+</div>';
+
+include "./inc/footer.inc.php";
+
+?>

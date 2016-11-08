@@ -22,12 +22,20 @@ function makeCards($statement,$i){
 				<div class="content">'.utf8_encode($row["GenreName"]).'</div>
 			</a>
 		</div>';
-			}else{
+			}elseif($i == 2){
 			$string .= '
 		<a class="ui card" href="single-painting.php?id='.$row["paintingID"].'">
 			<div class="image">
 				<img src="./images/art/works/square-medium/'.$row["ImageFileName"].'.jpg">
 				</div>
+			</a>
+		</div>';	
+			}elseif($i == 1){
+				$string .= '<a class="ui card" href="single-artist.php?id='.$row["ArtistID"].'">
+			<div class="image">
+				<img src="./images/art/artists/square-medium/'.$row["ArtistID"].'.jpg">
+				</div>
+				<div class="content">'.utf8_encode($row["FirstName"]).' '.utf8_encode($row["LastName"]).'</div>
 			</a>
 		</div>';	
 			}
