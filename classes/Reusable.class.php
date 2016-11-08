@@ -6,7 +6,7 @@
 //--------Overall functions page----------
 
 //this is used in more than one page to generate card divs
-include_once 'AbstractDB.class.php';
+
 class Reusable extends AbstractDB{
 private $connect;
 function makeCards($statement,$i){

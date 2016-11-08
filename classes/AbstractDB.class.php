@@ -1,5 +1,5 @@
 <?php
-include_once 'DBHelper.class.php';
+
 abstract class AbstractDB{
 	abstract protected function getSelect();
 	abstract protected function getKeyFieldName();

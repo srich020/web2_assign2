@@ -1,5 +1,5 @@
 <?php
-include_once 'AbstractDB.class.php';
+
 class ArtistDB extends AbstractDB{
 	
 	protected function getSelect(){

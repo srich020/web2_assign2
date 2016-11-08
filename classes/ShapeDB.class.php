@@ -1,5 +1,5 @@
 <?php
-include_once 'AbstractDB.php';
+
 class ShapeDB extends AbstractDB{
 	protected function getSelect(){
 		return 'Select ShapeID,ShapeName from Shapes ';

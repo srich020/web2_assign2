@@ -1,5 +1,5 @@
 <?php
-include_once 'AbstractDB.php';
+
 class SubjectDB extends AbstractDB{
 	protected function getSelect(){
 		return 'Select SubjectID,SubjectName from Subjects ';

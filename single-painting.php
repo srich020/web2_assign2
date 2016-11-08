@@ -6,7 +6,7 @@
 //--------Single Paintings PHP Page----------
 include './inc/header.inc.php';
 include './classes/AutoLoader.php';
-$i = Array("mysql:host=localhost;dbname=art","srich020","srich020");
+$i = Array("mysql:host=localhost;dbname=art","sadsquad","sadsquad");
 $pdo = DBHelper::createConnection($i);
 $painting = new SinglePainting($pdo);
 $paintingdata = new PaintingDB($pdo);

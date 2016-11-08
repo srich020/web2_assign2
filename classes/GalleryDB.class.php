@@ -1,5 +1,5 @@
 <?php
-include_once 'AbstractDB.class.php';
+
 class GalleryDB extends AbstractDB{
 	protected function getSelect(){
 		return 'Select * from Galleries ';
