@@ -67,7 +67,7 @@ COMP 3512 Fall 2016
                 <a class="item" href="browse-artists.php"><i class="users icon"></i> Artists</a>
                 <a class="item" href="browse-genres.php"><i class="theme icon"></i> Genres</a>
                 <a class="item" href="browse-paintings.php"><i class="paint brush icon"></i> Paintings</a>
-                <a class="item"><i class="cube icon"></i> Subjects</a>
+                <a class="item" href="browse-subjects.php"><i class="cube icon"></i> Subjects</a>
               </div>
             </div>        
             <div class="right item">
