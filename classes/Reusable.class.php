@@ -40,7 +40,10 @@ function makeCards($statement,$i){
 		</div>';	
 			}elseif($i == 4){
 				$string .= '<a class="ui card" href="single-subject.php?id='.$row["SubjectID"].'">
-				<div class="content">'.utf8_encode($row["GenreName"]).' '.utf8_encode($row["GenreName"]).'</div>
+			<div class="image">
+				<img src="./images/art/works/square-medium/'.$this->getSubjectPicture($row['SubjectID']).'.jpg">
+				</div>
+				<div class="content">'.utf8_encode($row["SubjectName"]).'</div>
 			</a>
 		</div>';	
 			}
@@ -70,6 +73,18 @@ function makeCards($statement,$i){
 		public function __construct($connect){
 		parent::__construct($connect);
 		$this->connect = $connect;
+	}
+	function getSubjectPicture($subjectId){
+		$limit = $subjectId.'RAND() Limit 1';
+		$toreturn = '';
+		$subject = new SubjectDB($this->connect);
+		$works = $subject->findByIDandJoinWithKField('ImageFileName FROM Subjects','PaintingSubjects ON (Subjects.SubjectID = PaintingSubjects.SubjectID) JOIN Paintings ON (PaintingSubjects.PaintingID = Paintings.PaintingID)','PaintingSubjects.SubjectID',$limit);
+		$painting = $works->fetch();
+		if($painting == null){
+			return "085030";
+		}else{
+		return $painting["ImageFileName"];
+		}
 	}
 }
 ?>

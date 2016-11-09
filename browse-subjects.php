@@ -25,8 +25,8 @@ $reuse = new Reusable($pdo);
 
 <?php
 $i = new Reusable($pdo);
-$genre = new GenreDB($pdo);
-$statement = $genre->orderBy('EraID, GenreName');
+$subject = new SubjectDB($pdo);
+$statement = $subject->orderBy('SubjectName');
 echo $i->makeCards($statement,4);
 echo '</div>
 </div>';
