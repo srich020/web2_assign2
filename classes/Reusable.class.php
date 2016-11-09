@@ -39,7 +39,7 @@ function makeCards($statement,$i){
 			</a>
 		</div>';	
 			}elseif($i == 4){
-				$string .= '<a class="ui card" href="single-subject.php?id='.$row["SubjectID"].'">
+				$string .= '<a class="ui card" href="single-subjects.php?id='.$row["SubjectID"].'">
 			<div class="image">
 				<img src="./images/art/works/square-medium/'.$this->getSubjectPicture($row['SubjectID']).'.jpg">
 				</div>
