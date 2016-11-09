@@ -41,11 +41,8 @@ $reuse = new Reusable($pdo);
 
 					<div class="meta">
 						<p>
-							<i class="orange star icon"></i>
-							<i class="orange star icon"></i>
-							<i class="orange star icon"></i>
-							<i class="orange star icon"></i>
-							<i class="empty star icon"></i>
+						<?php $painting->outputRatingStars($get); ?>
+							
 						</p>
 
 						<?php

@@ -12,6 +12,7 @@ public function __construct($connect){
 $this->connect = $connect;
 $this->artist = new ArtistDB($connect);
 $this->painting = new PaintingDB($connect);
+$this->reviews = new ReviewDB($connect);
 }
 function makeImage($get){
 			$statement = $this->painting->findByID($get);
@@ -116,6 +117,51 @@ function makeBottomTable($get){
 	$pdo = null;	
 	return $string;
 }
+
+function getPaintingAvgRating($get)
+	{
+		$avg;
+		$count=0;
+		$total=0;
+		
+		$statement = $this->reviews->findByID($get);
+		while($row = $statement->fetch()){
+			$total = $total + $row["Rating"];
+			$count++;
+		}
+		if($count >0){
+			$avg = round($total/$count);
+		}
+		else
+		{
+			$avg = 0;
+		}
+
+		
+		return $avg;
+	}
+
+
+
+
+function outputRatingStars($get)
+	{
+		
+		$count = $this->getPaintingAvgRating($get);
+							
+		for($i = 0 ; $i < $count; $i++)
+		{
+			echo '<i class="orange star icon"></i>';
+		}
+		
+		for($i = 5 ; $i > $count; $i--)
+		{
+			echo '<i class="empty star icon"></i>';
+			
+		}
+	}
+
+
 }
 
 ?>
