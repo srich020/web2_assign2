@@ -17,10 +17,9 @@ $pdo = DBHelper::createConnection($i);
 <div class="ui six column grid">
 <div class="ui hidden divider"></div>
 <?php
-	$i = new BrowseGenres();
+	$browse = new BrowseGenres();
 	$genre = new GenreDB($pdo);
-	$query = "Select * From Genres";
-	echo $i->ensureSet($_GET,$pdo);
+	echo $browse->makeGenreHeader($_GET["id"],$pdo);
 	echo '<div class="ui container">
 	<div class="ui six column grid">';
 	$a = new Reusable($pdo);

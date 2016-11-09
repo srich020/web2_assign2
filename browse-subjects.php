@@ -27,10 +27,9 @@ $reuse = new Reusable($pdo);
 $i = new Reusable($pdo);
 $genre = new GenreDB($pdo);
 $statement = $genre->orderBy('EraID, GenreName');
-echo $i->makeCards($statement,0);
+echo $i->makeCards($statement,4);
 echo '</div>
 </div>';
-
 include "./inc/footer.inc.php";
 
 ?>

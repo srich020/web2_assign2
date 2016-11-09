@@ -38,6 +38,11 @@ function makeCards($statement,$i){
 				<div class="content">'.utf8_encode($row["FirstName"]).' '.utf8_encode($row["LastName"]).'</div>
 			</a>
 		</div>';	
+			}elseif($i == 4){
+				$string .= '<a class="ui card" href="single-subject.php?id='.$row["SubjectID"].'">
+				<div class="content">'.utf8_encode($row["GenreName"]).' '.utf8_encode($row["GenreName"]).'</div>
+			</a>
+		</div>';	
 			}
 	}
 	return $string;

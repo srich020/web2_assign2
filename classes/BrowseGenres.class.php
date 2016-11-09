@@ -7,19 +7,6 @@
 
 class BrowseGenres{	
 public $i = null;
-function ensureSet($get,$pdo){
-	$i = $pdo;
-	$genreDB = new GenreDB($i);
-	$string = "";
-	if(!isset($get)||empty($get)){
-	$query = "SELECT * FROM Genres WHERE GenreID = ?;";
-	$string .= $this->makeGenreHeader(1,$i);
-	}else{
-	$query = "SELECT * FROM Genres WHERE GenreID = ?;";
-	$string .= $this->makeGenreHeader($get['id'],$i);
-	}
-	return $string;
-}
 
 function makeGenreHeader($parameter,$i){	
 	$genreDB = new GenreDB($i);
