@@ -5,13 +5,20 @@
         $('.ui.menu .ui.dropdown').dropdown({
             on: 'hover'
         });
-
+		
+		$('#cart').on('click',function(){
+			$('#cartModal.ui.fullscreen.modal').modal('show'); 
+			
+		});
+/*
         $('.ui.menu a.item')
             .on('click', function() {
                 $(this).addClass('active')
                        .siblings()
                        .removeClass('active');
-            });
+					   
+					   
+            });*/
 
         $('.menu .item').tab();      
       
@@ -21,7 +28,9 @@
       
       
         $('#artwork').on('click', function () {
-            $('.ui.fullscreen.modal').modal('show');             
-        });     
+            $('.ui.basic.modal').modal('show');             
+        });
+
+		
       
 });

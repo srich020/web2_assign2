@@ -38,7 +38,7 @@ COMP 3512 Fall 2016
                 <a class=" item">
                   <i class="heartbeat icon"></i> Favorites
                 </a>        
-                <a class=" item">
+                <a id="cart" class=" item">
                   <i class="shop icon"></i> Cart
                 </a>                                     
             </nav>            
@@ -80,5 +80,45 @@ COMP 3512 Fall 2016
 
         </div>
     </div>   
+	
+	<div id="cartModal" class="ui fullscreen modal">
+	<h2 class="centered header">Shopping Cart</h2>
+	<div class="ui grid container">
+	<div class="fourteen wide column"></div>
+		<div class="two wide column">	
+		
+		<div class="content">
+		<table class="ui collapsing celled table">
+			<thead>
+        <tr>
+            <th colspan="3">Charge</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="totals"><td colspan="3">Material</td><td colspan="2"></td></tr>
+         <tr class="totals"><td colspan="3">Subtotal</td><td colspan="2"></td></tr>
+		 <tr class="totals"><td colspan="3">Tax</td><td colspan="2"></td></tr>
+		 <tr class="totals"><td colspan="3">Shipping</td><td colspan="2"></td></tr>
+		 <tr class="totals"><td colspan="3">Material</td><td colspan="2"></td></tr>
+		  <tr class="totals"><td colspan="3">Grand Total</td><td colspan="2"></td></tr>
+		 
+    </tbody>
+		
+		</table></div>
+		
+		</div>
+		<div class="ui items">
+		
+		
+		</div>
+		
+		
+		</div>
+	</div>
+	
+	</div>
+	
+	
     
 </header> 

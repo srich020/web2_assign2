@@ -153,8 +153,10 @@ $reuse = new Reusable($pdo);
 					</div>  
 					<div class="ui bottom attached tab segment" data-tab="subjects">
 						<ul class="ui list">
-							<li class="item"><a href="#">People</a></li>
-							<li class="item"><a href="#">Science</a></li>
+						
+						<?php 
+								$painting->outputPaintingSubjects($get);
+						?>
 						</ul>
 					</div>  
 

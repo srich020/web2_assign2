@@ -13,13 +13,14 @@ $this->connect = $connect;
 $this->artist = new ArtistDB($connect);
 $this->painting = new PaintingDB($connect);
 $this->reviews = new ReviewDB($connect);
+$this->subjects = new SubjectDB($connect);
 }
 function makeImage($get){
 			$statement = $this->painting->findByID($get);
 			$row = $statement->fetch();
              return '<img src="./images/art/works/medium/'.$row["ImageFileName"].'.jpg" alt="..." class="ui big image" id="artwork">
                 
-                <div class="ui fullscreen modal">
+                <div class="ui basic modal">
                   <div class="image content">
                       <img src="./images/art/works/large/'.$row["ImageFileName"].'.jpg" alt="..." class="image" >
                       <div class="description">
@@ -33,7 +34,7 @@ function makeImage($get){
 function shoppingCart($get){
 				$string = "";
 				$statement = $this->painting->findByID($get);
-			$row = $statement->fetch();
+				$row = $statement->fetch();
 						$string .= '$'.number_format($row["Cost"]);	
                          $string .= '</div>
                         </div>
@@ -141,6 +142,12 @@ function getPaintingAvgRating($get)
 		return $avg;
 	}
 
+function outputPaintingSubjects($get){
+	$statement = $this->subjects->getAllPaintingSubjects($get);
+		while($row = $statement->fetch()){
+			echo '<li class="item"><a href="single-subject.php?=' .$row[1] .'">'. $row[0] .'</a></li>';
+		}
+}
 
 
 
