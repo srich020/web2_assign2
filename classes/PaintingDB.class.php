@@ -15,5 +15,10 @@ class PaintingDB extends AbstractDB{
 		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($order));
 		return $statement;
 	}
+		public function findSearchResults($searchTerm){
+		$sql = 'Select * from paintings JOIN artists USING(ArtistID) WHERE title LIKE "%'.$searchTerm.'%" OR Description LIKE "%'.$searchTerm.'%"';
+		$statement = DBHelper::runQuery($this->getConnection(),$sql,null);
+		return $statement;
+	}
 }
 ?>

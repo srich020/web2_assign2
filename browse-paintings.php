@@ -81,16 +81,19 @@ $artists = new ArtistDB($pdo);
 			if(!isset($_GET)||empty($_GET)){
 				$statement = $paintings->joinWithOrderBy('Artists ON (Paintings.ArtistID = Artists.ArtistID)','RAND() LIMIT 20');
 				echo $browse->browsePaintings($statement);
-				}else if(isset($_GET["artist"]) && $_GET["artist"]!=0){
+			}else if(isset($_GET["artist"]) && $_GET["artist"]!=0){
 				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.ArtistID',$_GET["artist"]);
 				echo $browse->browsePaintings($statement);	
-				}else if(isset($_GET["museum"])&& $_GET["museum"]!=0){
+			}else if(isset($_GET["museum"])&& $_GET["museum"]!=0){
 				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.GalleryID',$_GET["museum"]);
 				echo $browse->browsePaintings($statement);
-				}else if(isset($_GET["shape"])&& $_GET["shape"]!=0){
+			}else if(isset($_GET["shape"])&& $_GET["shape"]!=0){
 				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) JOIN Shapes ON (Paintings.ShapeID = Shapes.ShapeID)','Paintings.ShapeID',$_GET["shape"]);
 				echo $browse->browsePaintings($statement);
-				}				
+			}else if(isset($_GET["search"])&& !empty($_GET["search"])){
+				$statement = $paintings->findSearchResults($_GET["search"]);
+				echo $browse->browsePaintings($statement);
+			}				
 				echo '</div></div></body></html>';
 				include "./inc/footer.inc.php";
 			?>

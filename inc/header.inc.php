@@ -73,8 +73,10 @@ COMP 3512 Fall 2016
             </div>        
             <div class="right item">
                 <div class="ui mini icon input">
-                  <input type="text" placeholder="Search ...">
-                  <i class="search icon"></i>
+                  <form action="browse-paintings.php" method="GET">
+					<input type="text" placeholder="Search ..." name="search">
+					<button type="submit" value="Search"> <i class="search icon"></i>
+				  </form>
                 </div>
             </div>      
 

@@ -39,7 +39,7 @@ abstract class AbstractDB{
 		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($order));
 		return $statement;
 	}
-	
+
 	
 }
 ?>
