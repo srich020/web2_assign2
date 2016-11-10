@@ -13,8 +13,9 @@ class SubjectDB extends AbstractDB{
 
 	public function getAllPaintingSubjects($pId)
 	{
-		$sql = 'SELECT DISTINCT SubjectName, subjects.SubjectID FROM subjects INNER JOIN paintingsubjects ON subjects.subjectID
-		WHERE paintingsubjects.PaintingID =' . $pId .';';
+		$sql = 'SELECT SubjectName, subjects.SubjectID FROM paintingsubjects,subjects 
+                WHERE subjects.SubjectID = paintingsubjects.SubjectID
+                AND paintingsubjects.PaintingID = ' . $pId . ';';
 		$statement = DBHelper::runQuery($this->getConnection(),$sql);
 		return $statement;
 	}
