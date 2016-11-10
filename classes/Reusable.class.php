@@ -46,6 +46,19 @@ function makeCards($statement,$i){
 				<div class="content">'.utf8_encode($row["SubjectName"]).'</div>
 			</a>
 		</div>';	
+			}elseif($i == 5){
+				//'<a class="ui card" href="single-gallery.php?id='.$row["GalleryID"].'">
+				$string.='<a class="ui card" href="single-gallery.php?id='.$row["GalleryID"].'">
+					<div class="content">
+					  <div class="header">'.utf8_encode($row["GalleryName"]).'</div>
+					  <div class="description">'.utf8_encode($row["GalleryCity"]).', '.utf8_encode($row["GalleryCountry"]).'
+					  </div>
+					</div>
+					<div class="ui bottom attached button">
+					  <i class="info circle icon"></i>
+					  More Information
+					
+				  </div></a></div>';
 			}
 	}
 	return $string;
