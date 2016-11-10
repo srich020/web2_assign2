@@ -158,9 +158,48 @@ COMP 3512 Fall 2016
                 ?>
 
                 </div>
-                    
-                    
-                    
+                <a class=" item">
+                  <i class="heartbeat icon"></i> Favorites
+                </a>        
+                <a id="cart" class=" item">
+                  <i class="shop icon"></i> Cart
+                </a>                                     
+            </nav>            
+        </div>     
+    </div>   
+    
+    <div class="ui attached stackable borderless huge menu">
+        <div class="ui container">
+            <h2 class="header item">
+              <a href="index.php"><img src="images/logo5.png" class="ui small image" ></a>
+            </h2>  
+            <a class="item" href="index.php">
+              <i class="home icon"></i> Home 
+            </a>       
+            <a class="item" href="aboutus.php">
+              <i class="mail icon"></i> About Us
+            </a>      
+            <a class="item">
+              <i class="home icon"></i> Blog
+            </a>      
+            <div class="ui simple dropdown item">
+              <i class="grid layout icon"></i>
+              Browse
+                <i class="dropdown icon"></i>
+              <div class="menu">
+                <a class="item" href="browse-artists.php"><i class="users icon"></i> Artists</a>
+                <a class="item" href="browse-genres.php"><i class="theme icon"></i> Genres</a>
+                <a class="item" href="browse-paintings.php"><i class="paint brush icon"></i> Paintings</a>
+                <a class="item" href="browse-subjects.php"><i class="cube icon"></i> Subjects</a>
+				<a class="item" href="browse-galleries.php"><i class="university icon"></i> Galleries</a>
+              </div>
+            </div>        
+            <div class="right item">
+                <div class="ui mini icon input">
+                  <form action="browse-paintings.php" method="GET">
+					<input type="text" placeholder="Search ..." name="search">
+					<button type="submit" value="Search"> <i class="search icon"></i>
+				  </form>
                 </div>
                 <div class="two wide column">	
 

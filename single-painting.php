@@ -108,7 +108,7 @@ $reuse = new Reusable($pdo);
                               Museum
                           </td>
                           <td>
-                            '.utf8_encode($row["GalleryName"]).'
+                            '.'<a href=single-gallery.php?id='.$row["GalleryID"].'>'.utf8_encode($row["GalleryName"]).'</a>
                           </td>
                         </tr>       
                         <tr>
