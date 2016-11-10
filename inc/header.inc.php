@@ -14,12 +14,57 @@ COMP 3512 Fall 2016
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="css/semantic.js"></script>
     <script src="js/misc.js"></script>
+     <?php 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+        
+    }
+    else{
+        
+        if(isset($_SESSION["shoppingCart"]) && !empty($_SESSION["shoppingCart"])){
+            $_SESSION["shoppingCart"] = Array();
+        }else{          
+            $cartItems = $_SESSION["shoppingCart"];
+            
+        }
+        
+        if(isset($_SESSION["favorites"]) && !empty($_SESSION["favorites"])){
+            $_SESSION["favorites"] = Array();
+        }else{          
+            $favorites = $_SESSION["favorites"];
+            
+        }
+        
+        
+        
+        
+    }
+    
+    echo '<script type="text/javascript">
+        $(".orange.button").on("click", function(){
+           $.post("addToCart.php",{ num: 5 }, function(result) { 
+              alert("SUCK!!!");
+            });
+            
+        });
+        
+    
+        
+        $(".right.button").on("click", function(){
+           $.post("addToCart.php",{ num: 5 }, function(result) { 
+               
+            });
+            
+        });</script>';
+    
+    ?>
     
     <link href="css/semantic.css" rel="stylesheet" >
     <link href="css/icon.css" rel="stylesheet" >
     <link href="css/styles.css" rel="stylesheet">
 </head>
-
+	
+   
 <header>
     <div class="ui attached stackable grey inverted  menu">
         <div class="ui container">
@@ -121,6 +166,5 @@ COMP 3512 Fall 2016
 	
 	</div>
 	
-	
-    
+
 </header> 
