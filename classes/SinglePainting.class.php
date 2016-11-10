@@ -145,7 +145,7 @@ function getPaintingAvgRating($get)
 function outputPaintingSubjects($get){
 	$statement = $this->subjects->getAllPaintingSubjects($get);
 		while($row = $statement->fetch()){
-			echo '<li class="item"><a href="single-subject.php?=' .$row[1] .'">'. $row[0] .'</a></li>';
+			echo '<li class="item"><a href="single-subjects.php?id=' .$row[1] .'">'. $row[0] .'</a></li>';
 		}
 }
 
