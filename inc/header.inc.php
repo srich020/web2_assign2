@@ -93,7 +93,7 @@ COMP 3512 Fall 2016
     <div class="ui attached stackable borderless huge menu">
         <div class="ui container">
             <h2 class="header item">
-              <img src="images/logo5.png" class="ui small image" >
+              <a href="index.php"><img src="images/logo5.png" class="ui small image" ></a>
             </h2>  
             <a class="item" href="index.php">
               <i class="home icon"></i> Home 
