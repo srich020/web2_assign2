@@ -72,9 +72,26 @@ $artists = new ArtistDB($pdo);
 				$result = $artists->findByID($_GET["artist"]);
 				$row=$result->fetch();
 				echo '<p><b>ARTIST = '.$row["FirstName"].' '.$row["LastName"].'</b></p>';
+			}elseif(isset($_GET["shape"]) && $_GET["shape"]!=0){
+				$shape = new ShapeDB($pdo);
+				$result = $shape->findByID($_GET["shape"]);
+				$row=$result->fetch();
+				echo '<p><b>SHAPE = '.$row["ShapeName"].'</b></p>';
+			}elseif(isset($_GET["museum"]) && $_GET["museum"]!=0){
+				$museum = new GalleryDB($pdo);
+				$result = $museum->findByID($_GET["museum"]);
+				$row=$result->fetch();
+				echo '<p><b>MUSEUM = '.$row["GalleryName"].'</b></p>';
 			}else{
-				echo '<p><b>ARTIST</b></p>';
+				echo '';
 			}
+			// if(isset($_GET["artist"]) && $_GET["artist"]!=0){
+				// $result = $artists->findByID($_GET["artist"]);
+				// $row=$result->fetch();
+				// echo '<p><b>ARTIST = '.$row["FirstName"].' '.$row["LastName"].'</b></p>';
+			// }else{
+				// echo '<p><b>ARTIST</b></p>';
+			// }
 			echo '<div class="ui hidden divider"></div>
 			<div class="ui items">';
 			$browse = new BrowsePainting();
