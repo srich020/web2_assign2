@@ -30,10 +30,10 @@ function makeGenreHeader($parameter,$i){
 								<p></p>
 							</div>
 						</div>
-					</div>
+					</div><div class="ui hidden divider"></div></section>
 				</div>
 				<div class="ui hidden divider"></div>
-				<h2>Paintings</h2>
+				<div class="ui container"><h2>Paintings</h2></div>
 				<div class="ui divider"></div>';		
 	return $string;
 }

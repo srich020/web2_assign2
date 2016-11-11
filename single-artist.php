@@ -13,7 +13,7 @@ $reuse = new Reusable($pdo);
 $artistDB = new ArtistDB($pdo)
 ?>
 
-<body><main><div class="ui container">
+<body><main><section class="ui segment grey100"><div class="ui container">
 	<div class="ui six column grid">
 		<div class="ui hidden divider"></div>
 		
@@ -23,6 +23,7 @@ $artistDB = new ArtistDB($pdo)
 	echo $artist->makeArtistHeader(1,$pdo);
 	}else{
 	$query = "SELECT * FROM Artists WHERE ArtistID = ".$_GET["id"].";";
+	
 	echo $artist->makeArtistHeader($_GET["id"],$pdo);}
 	echo '</div>
 	</div>';

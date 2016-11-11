@@ -12,7 +12,7 @@ include './classes/AutoLoader.php';
 $i = Array("mysql:host=localhost;dbname=art","sadsquad","sadsquad");
 $pdo = DBHelper::createConnection($i);
 ?>
-
+<section class="ui segment grey100">
 <div class="ui container">
 <div class="ui six column grid">
 <div class="ui hidden divider"></div>

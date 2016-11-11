@@ -62,8 +62,8 @@ echo '<div class="ui hidden divider"></div>
 										</table>
 									</div>
 									<div class="ui bottom attached tab segment" data-tab="second">'.utf8_encode($row["Details"]).'</div>
-								</div>
-							</div><div class="ui hidden divider"></div><h2>Paintings</h2><div class="ui divider"></div>';
+								</div></section>
+							</div><div class="ui hidden divider"></div><div class="ui container"><h2>Paintings</h2><div class="ui divider"></div></div>';
 }
 }
 	
