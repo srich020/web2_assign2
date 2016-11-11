@@ -16,6 +16,7 @@ function makeSubjectHeader($parameter,$i){
 	$row = $result->fetch();
 	$string .= 
 '<div class="ui hidden divider"></div>
+		
 		<div class="ui container"> 
 			<div class="ui items">
 				<div class="item">
@@ -23,7 +24,7 @@ function makeSubjectHeader($parameter,$i){
 						<img src="./images/art/works/square-medium/'.$this->reuse->getSubjectPicture($parameter).'.jpg">
 						</div>
 						<div class="content">
-							<a class="huge header">'.utf8_encode($row["SubjectName"]).'</a>
+							<h1 class="ui huge header">'.utf8_encode($row["SubjectName"]).'</h1>
 							<div class="meta">
 								<span></span>
 							</div>
@@ -32,9 +33,9 @@ function makeSubjectHeader($parameter,$i){
 							</div>
 						</div>
 					</div>
-				</div>
+				</div><div class="ui hidden divider"></div></section>
 				<div class="ui hidden divider"></div>
-				<h2>Paintings</h2>
+				<div class="ui container"><h2>Paintings</h2></div>
 				<div class="ui divider"></div>';		
 	return $string;
 }
