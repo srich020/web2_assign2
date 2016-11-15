@@ -28,8 +28,8 @@ while($row=$result->fetch()){
 			</div>
 			<div>
 				<div class="ui hidden divider"></div>
-				<button class="ui orange icon button"><i class="shop icon"></i></button>
-				<button class="ui icon button"><i class="heart icon"></i></button>
+				<a href="shopping-cart.php?action=add&id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="shop icon"></i></button></a>
+				<a href="favorites-list.php?action=add&type=painting&id='.$row["PaintingID"].'"><button class="ui icon button"><i class="heart icon"></i></button></a>
 			</div>
 		</div>
 	</div>

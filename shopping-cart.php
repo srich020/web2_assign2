@@ -17,8 +17,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         // get product details
         $itemData = $paintingdata->findByID($paintingId)->fetch();
         $artist = $artistdata -> findByID($itemData["ArtistID"])->fetch();
-        //was there a quantity entered
-        if ($_GET['quantity'] && !empty($_GET['quantity'])) {
+        //was there a quantity entered?
+        if (isset($_GET['quantity']) && !empty($_GET['quantity'])) {
             $itemData['quantity'] = $_GET['quantity'];
         } else {
             $itemData['quantity'] = 1;
@@ -46,12 +46,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
             function printSingleCartRow($cartItem = array()) {
                 $row = '<div class="item">
                                 <div class="image">
-                                <img class="ui small image" href="single-painting.php?id='.$cartItem["PaintingID"].'" src="images/art/works/square-tiny/'.$cartItem["ImageFileName"].'.jpg">
+                                <img class="ui medium image" src="images/art/works/square-medium/'.$cartItem["ImageFileName"].'.jpg">
                                 </div>
                                 <div class="content">
                                         <a class="header" href="single-painting.php?id='.$cartItem["PaintingID"].'">'.$cartItem["Title"].'</a>
                                         
-                                        <div class="description">$'.$cartItem["Cost"].'</div>
+                                        <div class="description">$'.number_format($cartItem["Cost"]).'</div>
                                 </div>
                         </div>';
                 echo $row;

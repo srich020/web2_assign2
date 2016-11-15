@@ -36,10 +36,7 @@ $(function () {
 
     //Add to Favorites Button
 
-    $('.ui.button').on('click', function () {
-
-
-    });
+    
 
 
 

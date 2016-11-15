@@ -163,7 +163,6 @@ $reuse = new Reusable($pdo);
                                     <!-- Cart and Price -->
                                     <div class="ui segment">
                                         <div class="ui form">
-                                            <?php echo '<form action="'. $_SERVER['REQUEST_URI']. '?action='.'" method="POST">'; ?>
                                             <div class="ui tiny statistic">
                                                 <div class="value">
                                                     <?php
@@ -176,21 +175,28 @@ $reuse = new Reusable($pdo);
                                             </div>
 
                                             <div class="ui divider"></div>
-                                           
+
                                             <?php
                                             echo
-                                            '<a href="shopping-cart.php?action=add&id='. $get .'">Add to Cart</a>'
-                                            
-                                            ?>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            <button class="ui right labeled icon button">
+                                            '<a href="shopping-cart.php?action=add&id=' . $get . '">
+                                                <button class="ui labeled icon orange button">
+                                                    <i class="add to cart icon"></i>
+                                                    Add to Cart
+                                                  </button></a>';
+                                                    
+                                                    
+                                            echo '<a href="favorites-list.php?action=add&type=painting&id='.$get.'">
+                                                <button class="ui right labeled icon button">
                                                 <i class="heart icon"></i>
                                                 Add to Favorites
-                                            </button> </form>       
+                                                </button></a> ';        
+                                            ?>
+
+
+
+
+
+                                                
                                         </div>     <!-- END Cart -->                      
 
                                     </div>	

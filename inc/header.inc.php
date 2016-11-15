@@ -23,7 +23,7 @@ COMP 3512 Fall 2016
             session_start();
         } else {
            $cart = new ShoppingCart();
-           //$favorites;
+           $favorites = new FavoritesList();
            
         }
 
@@ -66,7 +66,7 @@ COMP 3512 Fall 2016
                             <a class="item"><i class="settings icon"></i> Account Settings</a>
                         </div>
                     </div>
-                    <a class=" item">
+                    <a class=" item" href='favorites-list.php'>
                         <i class="heartbeat icon"></i> Favorites
                     </a>        
                     <a class=" item" href='shopping-cart.php'>
