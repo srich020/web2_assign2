@@ -5,10 +5,7 @@ $(function () {
     $('.ui.menu .ui.dropdown').dropdown({
         on: 'hover'
     });
-    $("#cart").on("click", function () {
-        $("#cartModal.ui.fullscreen.modal").modal("show");
-    });
-    
+
     /*
    
     
