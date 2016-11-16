@@ -26,7 +26,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
 
         $cart->addToCart($itemData);
-    }
+    }elseif($_GET['action'] == 'delete' && !empty($_GET['id'])){
+		$cart->deleteShoppingItem($_GET['id']);
+		
+		
+	}
 }
 ?>
 
@@ -43,18 +47,30 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                 printSingleCartRow($cartItem);
               } 
 
-            function printSingleCartRow($cartItem = array()) {
-                $row = '<div class="item">
-                                <div class="image">
-                                <img class="ui medium image" src="images/art/works/square-medium/'.$cartItem["ImageFileName"].'.jpg">
-                                </div>
-                                <div class="content">
-                                        <a class="header" href="single-painting.php?id='.$cartItem["PaintingID"].'">'.$cartItem["Title"].'</a>
-                                        
-                                        <div class="description">$'.number_format($cartItem["Cost"]).'</div>
-                                </div>
-                        </div>';
-                echo $row;
+            function printSingleCartRow($row = array()) {
+                echo '<div class="item">
+	<div class="image">
+		<img href="single-painting.php?id='.$row["PaintingID"].'" src="images/art/works/square-medium/'.$row["ImageFileName"].'.jpg">
+		</div>
+		<div class="content">
+			<a class="header" href="single-painting.php?id='.$row["PaintingID"].'">'.utf8_encode($row["Title"]).'</a>
+			<div class="meta">
+			</div>
+			<div class="extra">
+				<p>'.utf8_encode($row["Excerpt"]).'</p>
+			</div>
+			<div class="description">Individual Cost: $'.number_format($row["Cost"]).'<br>Total Cost: $'.($row['Cost']*$row['quantity']).'
+
+			</div>
+			<div>
+				<div class="ui hidden divider"></div>
+				<a href="single-painting.php?id='.$row['PaintingID'].'"><button class="ui grey orange button">'.$row['quantity'].'x in Cart</i></button></a>
+								<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui divider"></div>';
             }
             ?>
 
@@ -73,15 +89,14 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="totals"><td colspan="3">Material</td><td colspan="2"></td></tr>
-                    <tr class="totals"><td colspan="3">Subtotal</td><td colspan="2"></td></tr>
-                    <tr class="totals"><td colspan="3">Tax</td><td colspan="2"></td></tr>
-                    <tr class="totals"><td colspan="3">Shipping</td><td colspan="2"></td></tr>
-                    <tr class="totals"><td colspan="3">Material</td><td colspan="2"></td></tr>
-                    <tr class="totals"><td colspan="3">Grand Total</td><td colspan="2"></td></tr>
-
+                    <tr class="totals"><td colspan="3">Base Costs</td><td colspan="2">$<?php echo $cart->getTotalAmount();?></td></tr>
+					<tr class="totals"><td colspan="3">Material</td><td colspan="2">$</td></tr>
+                    <tr class="totals"><td colspan="3">Subtotal</td><td colspan="2">$<?php echo $cart->getSubtotal();?></td></tr>
+                    <tr class="totals"><td colspan="3">Tax</td><td colspan="2">$<?php echo $cart->getTax();?></td></tr>
+                    <tr class="totals"><td colspan="3">Standard Shipping</td><td colspan="2">$<?php echo $cart->getStandardShippingCosts();?></td></tr>
+					<tr class="totals"><td colspan="3">Express Shipping</td><td colspan="2">$<?php echo $cart->getExpressShippingCosts();?></td></tr>
+                    <tr class="totals"><td colspan="3">Total</td><td colspan="2">$</td></tr>
                 </tbody>
-
             </table></div>
 
     </div>

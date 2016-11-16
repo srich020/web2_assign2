@@ -163,6 +163,7 @@ $reuse = new Reusable($pdo);
                                     <!-- Cart and Price -->
                                     <div class="ui segment">
                                         <div class="ui form">
+										<form action='shopping-cart.php' method='get'>
                                             <div class="ui tiny statistic">
                                                 <div class="value">
                                                     <?php
@@ -178,7 +179,8 @@ $reuse = new Reusable($pdo);
 
                                             <?php
                                             echo
-                                            '<a href="shopping-cart.php?action=add&id=' . $get . '">
+                                            '<input type="hidden" name="id" value="'.$get.'">
+											<input type="hidden" name="action" value="add">
                                                 <button class="ui labeled icon orange button">
                                                     <i class="add to cart icon"></i>
                                                     Add to Cart
@@ -189,7 +191,7 @@ $reuse = new Reusable($pdo);
                                                 <button class="ui right labeled icon button">
                                                 <i class="heart icon"></i>
                                                 Add to Favorites
-                                                </button></a> ';        
+                                                </button></a><form> ';        
                                             ?>
 
 

@@ -29,6 +29,12 @@ class ShoppingCart {
         unset($this->cart['total']); //Extra record in list, needs unhooking
         return $this->cart;
     }
+	public function deleteFavoritePainting($paintingId) { //Removes a painting from list.
+        if (isset($this->favoritePaintings[$paintingId]) && !empty($this->favoritePaintings[$paintingId])) {
+            unset($this->favoritePaintings[$paintingId]);
+        }
+        $this->saveFavoritePaintings();
+    }
 
     public function getCartTotal() {
         return $this->cart['total'];
@@ -41,11 +47,10 @@ class ShoppingCart {
             $id = $item["PaintingID"];
 
 
-            $quantity;
-            //Is it already in the cart?
+          
             if (!isset($this->cart[$id])) {
                 $this->cart[$id] = $item;
-                $quantity = 0;
+                $quantity = $_GET['quantity'];
             } else {
                 $quantity = (int) $this->cart[$id]['quantity'];
             }
@@ -61,6 +66,12 @@ class ShoppingCart {
             }
         }
     }
+	public function deleteShoppingItem($paintingId) { //Removes an artist from list.
+        if (isset($this->cart[$paintingId]) && !empty($this->cart[$paintingId])) {
+            unset($this->cart[$paintingId]);
+        }
+        $this->saveAndUpdateCart();
+    }
 
     protected function saveAndUpdateCart() {
 
@@ -72,6 +83,44 @@ class ShoppingCart {
     }
 
 //put your code here
+
+//cart logic 
+
+	public function getTotalAmount(){
+		$total = 0;
+		foreach($this->cart as $cartItem){
+			$total = ((int)$cartItem['Cost']*(int)$cartItem['quantity'])+$total;
+		}
+		return $total;
+	}
+	public function getMaterialCost(){
+		return 0;
+	}
+	public function getSubtotal(){
+		$subtotal = ($this->getTotalAmount()+$this->getMaterialCost());
+		return $subtotal;
+	}
+	public function getTax(){
+		return $this->getSubtotal()*0.05;
+	}
+	public function getStandardShippingCosts(){
+		$total = 0;
+		foreach($this->cart as $cartItem){
+			$total = ((int)$cartItem['quantity']*25)+$total;
+		}
+		return $total;
+	}
+	public function getExpressShippingCosts(){
+		$total = 0;
+		foreach($this->cart as $cartItem){
+			$total = ((int)$cartItem['quantity']*50)+$total;
+		}
+		return $total;
+	}
+	public function getTotal(){
+		return $this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()
+	}
+	
 }
 
 ?>

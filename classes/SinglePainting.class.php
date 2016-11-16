@@ -41,7 +41,7 @@ function shoppingCart($get){
                         <div class="four fields">
                             <div class="three wide field">
                                 <label>Quantity</label>
-                                <input type="number">
+                                <input type="number" name="quantity">
                             </div>';   			
 				return $string;
 	
