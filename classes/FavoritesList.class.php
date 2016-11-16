@@ -72,7 +72,7 @@ class FavoritesList {
 
     public function deleteFavoritePainting($paintingId) { //Removes a painting from list.
         if (isset($this->favoritePaintings[$paintingId]) && !empty($this->favoritePaintings[$paintingId])) {
-            unset($_SESSION['favoritePaintings'][$paintingId]);
+            unset($this->favoritePaintings[$paintingId]);
         }
         $this->saveFavoritePaintings();
     }

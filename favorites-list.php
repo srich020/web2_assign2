@@ -30,6 +30,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
         $id = $_GET['id'];
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {
+                echo "<script type='text/javascript'>alert('delete fav painting');</script>";
                 $favorites->deleteFavoritePainting($id);     //Delete 1 painting from list
             } else if ($_GET['type'] == 'artist') {
                 $favorites->deleteFavoriteArtist($id);       //Delete 1 artist from list
@@ -66,8 +67,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
                      <div class="ui tiny image">
                      <a href="single-artist.php?id='.$id.'">
                  <img class="tiny image" src="images/art/artists/square-thumb/' . $id . '"></a>
+                    
                     </div>
                 <div class="middle aligned content">
+                
+                 
                   <a href="single-artist.php?id='.$id.'">'. $singleArtist['FirstName'] . ' ' . $singleArtist['LastName'] . '</a>
                 </div>
               </div>';
@@ -100,6 +104,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
                     <div class="ui tiny image">
                       <img class="tiny image" src="images/art/works/square-small/'.$singlePainting['ImageFileName'] . '.jpg">
                     </div>
+                    <div class="meta"><a href="favorites-list.php?action=delete&type=painting&id='.$get.'">
+                         <button class="ui grey icon button"><i class="trash icon"></i>Remove</button></a></div>
                     <div class="middle aligned content">
                       <a class="header" href="single-painting.php?id=' . $get .
                         '">'.utf8_encode($singlePainting['Title']) .'</a>
