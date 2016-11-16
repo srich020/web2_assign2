@@ -19,6 +19,11 @@ abstract class AbstractDB{
 		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
 		return $statement;
 	}	
+	public function findByIDOrder($id,$order){
+		$sql = $this->getSelect().' where '.$this->getKeyFieldName().' =? Order By '.$order;
+		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
+		return $statement;
+	}	
 	public function findByIDWithKey($id,$keyfield){
 		$sql = $this->getSelect().' where '.$keyfield.' =?';
 		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
@@ -31,6 +36,11 @@ abstract class AbstractDB{
 	}
 	public function findByIDandJoinWithKField($field,$join,$keyfield,$id){
 		$sql = 'SELECT '.$field.' JOIN '.$join.' where '.$keyfield.' =?';
+		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
+		return $statement;
+	}
+	public function findByIDandJoinWithKFieldOrder($field,$join,$keyfield,$id,$order){
+		$sql = 'SELECT '.$field.' JOIN '.$join.' where '.$keyfield.' =? Order By '.$order;
 		$statement = DBHelper::runQuery($this->getConnection(),$sql,Array($id));
 		return $statement;
 	}

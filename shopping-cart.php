@@ -82,6 +82,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                                         </div>
 
 								<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
+								<a href="single-painting.php?id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="write icon"></i></button></a>
 			</div>
 		</div>
 	</div>
@@ -99,7 +100,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
     </div> 
     <div class="two wide column">	
 
-        <div class="content">
+        <div class="content" id="carttotal">
             <table class="ui collapsing celled table">
                 <thead>
                     <tr>

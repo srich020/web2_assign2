@@ -69,17 +69,17 @@ $artists = new ArtistDB($pdo);
 			<div class="ui hidden divider"></div>
 			<?php
 			if(isset($_GET["artist"]) && $_GET["artist"]!=0){
-				$result = $artists->findByID($_GET["artist"]);
+				$result = $artists->findByIDOrder($_GET["artist"],"LastName");
 				$row=$result->fetch();
 				echo '<p><b>ARTIST = '.$row["FirstName"].' '.$row["LastName"].'</b></p>';
 			}elseif(isset($_GET["shape"]) && $_GET["shape"]!=0){
 				$shape = new ShapeDB($pdo);
-				$result = $shape->findByID($_GET["shape"]);
+				$result = $shape->findByIDOrder($_GET["shape"],"ShapeName");
 				$row=$result->fetch();
 				echo '<p><b>SHAPE = '.$row["ShapeName"].'</b></p>';
 			}elseif(isset($_GET["museum"]) && $_GET["museum"]!=0){
 				$museum = new GalleryDB($pdo);
-				$result = $museum->findByID($_GET["museum"]);
+				$result = $museum->findByIDOrder($_GET["museum"],"GalleryName");
 				$row=$result->fetch();
 				echo '<p><b>MUSEUM = '.$row["GalleryName"].'</b></p>';
 			}else{
@@ -96,16 +96,16 @@ $artists = new ArtistDB($pdo);
 			<div class="ui items">';
 			$browse = new BrowsePainting();
 			if(!isset($_GET)||empty($_GET)){
-				$statement = $paintings->joinWithOrderBy('Artists ON (Paintings.ArtistID = Artists.ArtistID)','RAND() LIMIT 20');
+				$statement = $paintings->joinWithOrderBy('Artists ON (Paintings.ArtistID = Artists.ArtistID)','YearOfWork DESC LIMIT 20');
 				echo $browse->browsePaintings($statement);
 			}else if(isset($_GET["artist"]) && $_GET["artist"]!=0){
-				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.ArtistID',$_GET["artist"]);
+				$statement = $paintings->findByIDandJoinWithKFieldOrder('* from Paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.ArtistID',$_GET["artist"],"YearOfWork ASC");
 				echo $browse->browsePaintings($statement);	
 			}else if(isset($_GET["museum"])&& $_GET["museum"]!=0){
-				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.GalleryID',$_GET["museum"]);
+				$statement = $paintings->findByIDandJoinWithKFieldOrder('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.GalleryID',$_GET["museum"],"YearOfWork ASC");
 				echo $browse->browsePaintings($statement);
 			}else if(isset($_GET["shape"])&& $_GET["shape"]!=0){
-				$statement = $paintings->findByIDandJoinWithKField('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) JOIN Shapes ON (Paintings.ShapeID = Shapes.ShapeID)','Paintings.ShapeID',$_GET["shape"]);
+				$statement = $paintings->findByIDandJoinWithKFieldOrder('* from Paintings','Galleries ON (Paintings.GalleryID = Galleries.GalleryID) JOIN Artists ON (Paintings.ArtistID = Artists.ArtistID) JOIN Shapes ON (Paintings.ShapeID = Shapes.ShapeID)','Paintings.ShapeID',$_GET["shape"],"YearOfWork ASC");
 				echo $browse->browsePaintings($statement);
 			}else if(isset($_GET["search"])&& !empty($_GET["search"])){
 				$statement = $paintings->findSearchResults($_GET["search"]);

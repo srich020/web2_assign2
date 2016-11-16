@@ -24,10 +24,10 @@ $pdo = DBHelper::createConnection($i);
 	<div class="ui six column grid">';
 	$a = new Reusable($pdo);
 	if(!isset($_GET)||empty($_GET)||!is_numeric($_GET["id"])){
-	$statement = $genre->findByIDandJoin('paintings.paintingID, ImageFileName FROM paintings','paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID)',1);
+	$statement = $genre->findByIDandJoin('paintings.paintingID, ImageFileName, YearOfWork FROM paintings','paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID)',1);
 	echo $a->MakeCards($statement,2);
 	}else{
-	$statement = $genre->findByIDandJoin('paintings.paintingID, ImageFileName FROM paintings','paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID)',$_GET["id"]);
+	$statement = $genre->findByIDandJoin('paintings.paintingID, ImageFileName,YearOfWork FROM paintings','paintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID)',$_GET["id"]);
 	echo $a->MakeCards($statement,2);
 	}
 	echo '</div></div></div></div></div></div></body>';

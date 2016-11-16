@@ -138,14 +138,16 @@ $reuse = new Reusable($pdo);
                         </tr>        
                       </tbody>
                     </table>    
-                </div>';
+                </div>
+				
+				<div class="ui bottom attached tab segment" data-tab="genres">
+				<ul class="ui list">' ;
 
                                     $statement = $paintingdata->findByIDandJoinWithKField('Genres.GenreName,PaintingGenres.GenreID FROM paintings', 'PaintingGenres ON (Paintings.PaintingID = PaintingGenres.PaintingID) JOIN Genres ON (PaintingGenres.GenreID = Genres.GenreID)', 'paintings.paintingID', $get);
-                                    $row = $statement->fetch();
-                                    echo '<div class="ui bottom attached tab segment" data-tab="genres">
- 
-                        <ul class="ui list">
-                          <li class="item"><a href="single-genre.php?id=' . $row["GenreID"] . '">' . $row["GenreName"];
+                                    
+									while($row = $statement->fetch()){
+                                    echo '<li class="item"><a href="single-genre.php?id=' . $row["GenreID"] . '">' . $row["GenreName"].'</li>';
+									}
                                     ?>
                                     </a></li>
                                     </ul>
