@@ -118,7 +118,7 @@ class ShoppingCart {
 		return $total;
 	}
 	public function getTotal(){
-		return $this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount()+$this->getTotalAmount();
+		return 0;
 	}
 	
 }

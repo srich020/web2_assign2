@@ -41,6 +41,9 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         <div class="ui hidden divider"></div>
         <div class="ui items">
             <?php
+			if(count($_SESSION['shoppingCart']) == 1){
+				echo "There are no items in your cart!";
+			}
             
             
               foreach($cart->getCart() as $cartItem){
@@ -50,21 +53,34 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
             function printSingleCartRow($row = array()) {
                 echo '<div class="item">
 	<div class="image">
-		<img href="single-painting.php?id='.$row["PaintingID"].'" src="images/art/works/square-medium/'.$row["ImageFileName"].'.jpg">
+	<img href="single-painting.php?id='.$row["PaintingID"].'" src="images/art/works/square-medium/'.$row["ImageFileName"].'.jpg">
 		</div>
 		<div class="content">
-			<a class="header" href="single-painting.php?id='.$row["PaintingID"].'">'.utf8_encode($row["Title"]).'</a>
-			<div class="meta">
-			</div>
-			<div class="extra">
-				<p>'.utf8_encode($row["Excerpt"]).'</p>
-			</div>
-			<div class="description">Individual Cost: $'.number_format($row["Cost"]).'<br>Total Cost: $'.($row['Cost']*$row['quantity']).'
-
-			</div>
+			 <div class="ui segment">
+                                        <div class="ui form">
+										<form action="shopping-cart.php" method="get">
+                                            <div class="ui tiny statistic">
+					<a class="header" href="single-painting.php?id='.$row["PaintingID"].'">'.utf8_encode($row["Title"]).'</a>
+                        </div>
+                        <div class="four fields">
+                            <div class="two wide field">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" value="'.$row['quantity'].'">
+                            </div><div class="three wide field"><label>Individual Cost</label>$'.number_format($row['Cost']).'
+									</div><div class="three wide field"><label>Material</label>$
+                            </div><div class="three wide field"><label>Total Cost</label>$'.($row['Cost']*$row['quantity']).'
+                            </div>                                                </div>                     
+                                            </form></div>
 			<div>
-				<div class="ui hidden divider"></div>
-				<a href="single-painting.php?id='.$row['PaintingID'].'"><button class="ui grey orange button">'.$row['quantity'].'x in Cart</i></button></a>
+ 
+
+
+
+
+
+                                                
+                                        </div>
+
 								<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
 			</div>
 		</div>
@@ -72,6 +88,9 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
 	<div class="ui divider"></div>';
             }
+			
+			//BUFFER
+			//<div class="description">Individual Cost: $'.number_format($row["Cost"]).'<br>Total Cost: $'.($row['Cost']*$row['quantity']).'</div>
             ?>
 
         </div>
@@ -90,12 +109,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                 </thead>
                 <tbody>
                     <tr class="totals"><td colspan="3">Base Costs</td><td colspan="2">$<?php echo $cart->getTotalAmount();?></td></tr>
-					<tr class="totals"><td colspan="3">Material</td><td colspan="2">$</td></tr>
+					<tr class="totals"><td colspan="3">Material</td><td colspan="2">$<?php echo $cart->getMaterialCost();?></td></tr>
                     <tr class="totals"><td colspan="3">Subtotal</td><td colspan="2">$<?php echo $cart->getSubtotal();?></td></tr>
                     <tr class="totals"><td colspan="3">Tax</td><td colspan="2">$<?php echo $cart->getTax();?></td></tr>
                     <tr class="totals"><td colspan="3">Standard Shipping</td><td colspan="2">$<?php echo $cart->getStandardShippingCosts();?></td></tr>
 					<tr class="totals"><td colspan="3">Express Shipping</td><td colspan="2">$<?php echo $cart->getExpressShippingCosts();?></td></tr>
-                    <tr class="totals"><td colspan="3">Total</td><td colspan="2">$</td></tr>
+                    <tr class="totals"><td colspan="3">Total</td><td colspan="2">$<?php echo $cart->getExpressShippingCosts();?></td></tr>
                 </tbody>
             </table></div>
 
