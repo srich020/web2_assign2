@@ -40,9 +40,11 @@ class ShoppingCart {
             $id = $item["PaintingID"];
             if (!isset($this->cart[$id])) {
                 $this->cart[$id] = $item;
-            } else {
-                $this->cart[$id]['quantity'] += $_GET['quantity'];
-            }
+            }else{
+				$this->cart[$id]['frame'] = isset($_GET['Frame']) ? $_GET['Frame'] : 'none';
+				$this->cart[$id]['glass'] = isset($_GET['Glass']) ? $_GET['Glass'] : 'none';
+				$this->cart[$id]['matt'] = isset($_GET['Matt']) ? $_GET['Matt'] : 'none';
+			}
             // save cart
             if ($this->saveAndUpdateCart()) {
                 return isset($rowid) ? $rowid : TRUE;
@@ -97,6 +99,7 @@ class ShoppingCart {
 		}
 		
 		if($itemData['frame'] == "none" || $itemData['frame'] == "[None]"){
+			
 		}else{
 			$Frames = new FrameDB($pdo);
 			$framesamount = $Frames->findByID($itemData['frame'])->fetch();
@@ -130,14 +133,22 @@ class ShoppingCart {
 		foreach($this->cart as $cartItem){
 			$total = ((int)$cartItem['quantity']*25)+$total;
 		}
+		if($total < 1500){
 		return $total;
+		}else{
+			return 0;
+		}
 	}
 	public function getExpressShippingCosts(){
 		$total = 0;
 		foreach($this->cart as $cartItem){
 			$total = ((int)$cartItem['quantity']*50)+$total;
 		}
+		if($total < 2500){
 		return $total;
+		}else{
+			return 0;
+		}
 	}
 	public function getTotal(){
 		return ($this->getTotalAmount()+$this->getTotalMaterialCost()+$this->getTax()+$this->getStandardShippingCosts());
@@ -146,17 +157,17 @@ class ShoppingCart {
 	public function getOptions($row){
 		$return = "";
 		if($row['glass'] == "[None]"){
-			$return .= "";
+			$return .= "Glass: none<br>";
 		}else{
 			$return .= 'Glass: '.$row['glass'].'<br>';
 		}
 		if($row['matt'] == "[None]"){
-			$return .= "";
+			$return .= "Matt: none<br>";
 		}else{
 			$return .= 'Matt: '.$row['matt'].'<br>';
 		}
 		if($row['frame'] == "[None]"){
-			$return .= "";
+			$return .= "Frame: none<br>";
 		}else{
 			$return .= 'Frame: '.$row['frame'].'<br>';
 		}
