@@ -62,7 +62,7 @@ class FavoritesList {
             $id = $artists["ArtistID"];
 
             if (!isset($this->favoriteArtists[$id]) && empty($this->favoriteArtists[$id])) {
-                $this->favoriteArtists[$id] = $painting;
+                $this->favoriteArtists[$id] = $artists;
             } else {
                 //TODO - Notification to tell user that it's already in list 
             }
@@ -79,7 +79,7 @@ class FavoritesList {
 
     public function deleteFavoriteArtist($artistId) { //Removes an artist from list.
         if (isset($this->favoriteArtists[$artistId]) && !empty($this->favoriteArtists[$artistId])) {
-            unset($_SESSION['favoriteArtists'][$artistId]);
+            unset($this->favoriteArtists[$artistId]);
         }
         $this->saveFavoriteArtists();
     }
