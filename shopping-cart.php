@@ -9,20 +9,15 @@ $artistdata = new ArtistDB($pdo);
 $cart = new ShoppingCart();
 
 
-//TODO: Replacing already added item
 //Add extra buttons
 //replace buttons in BrowsePaintings and SinglePaintings 
-
-
-
-
-
 //Functionality for adding a cart item
+
 if (isset($_GET['action']) && !empty($_GET['action'])) {
     if ($_GET['action'] == 'add' && !empty($_GET['id'])) {
-
+		
         $paintingId = $_GET['id'];
-
+		
         // get product details
         $itemData = $paintingdata->findByID($paintingId)->fetch();
         $artist = $artistdata -> findByID($itemData["ArtistID"])->fetch();
@@ -44,7 +39,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 
 <div class="ui grid container">
     <div class="ui hidden divider"></div>
-    <h1 class='ui header'>Shopping Cart</h1>
+    <h1 class='ui header'>Shopping Cart</h1> 
+	
     <div class="fourteen wide column">
         <div class="ui hidden divider"></div>
         <div class="ui items">
@@ -89,7 +85,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 </div>
 			<div>      
                                         </div>
-<button type="submit" class="ui blue icon button" value="Submit">Update Cart</button>
+				<button type="submit" class="ui blue icon button" value="Submit">Update Cart</button>
 				</form>
 				<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
 				<a href="single-painting.php?id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="write icon"></i></button></a></div>
@@ -109,7 +105,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 			<h4 class="ui horizontal divider header">
   <i class="bar chart icon"></i>
   Order Details
+
 </h4>
+												 
+
 <table class="ui definition table">
   <tbody>
     <tr>
