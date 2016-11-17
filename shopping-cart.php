@@ -9,11 +9,18 @@ $artistdata = new ArtistDB($pdo);
 $cart = new ShoppingCart();
 
 
+//TODO: Replacing already added item
+//Add extra buttons
+//replace buttons in BrowsePaintings and SinglePaintings 
+
+
+
+
+
 //Functionality for adding a cart item
 if (isset($_GET['action']) && !empty($_GET['action'])) {
     if ($_GET['action'] == 'add' && !empty($_GET['id'])) {
-	
-		
+
         $paintingId = $_GET['id'];
 
         // get product details
@@ -22,9 +29,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         //was there a quantity entered?
         if (isset($_GET['quantity']) && !empty($_GET['quantity'])) {
             $itemData['quantity'] = $_GET['quantity'];
-        } elseif(!isset($_GET['quantity'])){
-            $itemData['quantity'] += 1;
         }
+		$itemData['frame'] = isset($_GET['Frame']) ? $_GET['Frame'] : 'none';
+		$itemData['glass'] = isset($_GET['Glass']) ? $_GET['Glass'] : 'none';
+		$itemData['matt'] = isset($_GET['Matt']) ? $_GET['Matt'] : 'none';
         $cart->addToCart($itemData);
 		}elseif($_GET['action'] == 'delete' && !empty($_GET['id'])){
 		$cart->deleteShoppingItem($_GET['id']);
@@ -48,10 +56,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
             
             
               foreach($cart->getCart() as $cartItem){
-                printSingleCartRow($cartItem);
+                printSingleCartRow($cartItem,$cart);
               } 
 
-            function printSingleCartRow($row = array()) {
+            function printSingleCartRow($row = array(),$cart) {
                 echo '<div class="item">
 	<div class="image">
 	<img href="single-painting.php?id='.$row["PaintingID"].'" src="images/art/works/square-medium/'.$row["ImageFileName"].'.jpg">
@@ -62,7 +70,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                                             <div class="ui tiny statistic">
 					<a class="header" href="single-painting.php?id='.$row["PaintingID"].'">'.utf8_encode($row["Title"]).'</a>
                         </div>
-                        <div class="four fields">
+                        <div class="five fields">
                             <div class="two wide field">
                                 <label>Quantity</label>
 								<form action="shopping-cart.php" id="update" method="get">
@@ -71,8 +79,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
                                 <input type="number" name="quantity" value="'.$row['quantity'].'">
 							
                             </div><div class="three wide field"><label>Individual Cost</label>$'.number_format($row['Cost']).'
-									</div><div class="three wide field"><label>Material</label>$
-                            </div><div class="three wide field"><label>Total Cost</label>$'.($row['Cost']*$row['quantity']).'
+									</div>
+									<div class="three wide field"><label>Materials Chosen</label>'.$cart->getOptions($row).'
+									</div>
+									<div class="three wide field"><label>Material</label>$'.$cart->getMaterialCost($row).'
+                            </div>
+							<div class="three wide field"><label>Total Cost</label>$'.($cart->getIndividualTotalCost($row)).'
                             </div>                                                </div>                     
 </div>
 			<div>      
@@ -80,7 +92,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 <button type="submit" class="ui blue icon button" value="Submit">Update Cart</button>
 				</form>
 				<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
-								<a href="single-painting.php?id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="write icon"></i></button></a></div>
+				<a href="single-painting.php?id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="write icon"></i></button></a></div>
 		</div>
 	</div>
 	<div class="ui hidden divider"></div>';
@@ -106,7 +118,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
     </tr>
     <tr>
       <td>Material</td>
-      <td>$<?php echo $cart->getMaterialCost();?></td>
+      <td>$<?php echo $cart->getTotalMaterialCost();?></td>
     </tr>
 	<tr>
       <td>Subtotal</td>

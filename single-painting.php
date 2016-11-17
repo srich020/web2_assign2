@@ -9,6 +9,7 @@ $i = Array("mysql:host=localhost;dbname=art", "sadsquad", "sadsquad");
 $pdo = DBHelper::createConnection($i);
 $painting = new SinglePainting($pdo);
 $paintingdata = new PaintingDB($pdo);
+//$cart = $_SESSION['shoppingCart'];
 $reuse = new Reusable($pdo);
 ?>
 

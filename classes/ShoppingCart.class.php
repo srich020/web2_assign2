@@ -12,7 +12,6 @@
  * @author david han
  */
 class ShoppingCart {
-
     protected $cart = array();
 
     public function __construct() {
@@ -41,11 +40,8 @@ class ShoppingCart {
             $id = $item["PaintingID"];
             if (!isset($this->cart[$id])) {
                 $this->cart[$id] = $item;
-                $quantity = $_GET['quantity'];
-				$this->clearGlobal();
             } else {
                 $this->cart[$id]['quantity'] += $_GET['quantity'];
-				$this->clearGlobal();
             }
             // save cart
             if ($this->saveAndUpdateCart()) {
@@ -55,11 +51,6 @@ class ShoppingCart {
             }
         }
     }
-	private function clearGlobal(){
-		$_GET['quantity'] = null;
-		$_GET['id'] = null;
-		$_GET['action'] = null;
-	}
 	public function deleteShoppingItem($paintingId) { //Removes an artist from list.
         if (isset($this->cart[$paintingId]) && !empty($this->cart[$paintingId])) {
             unset($this->cart[$paintingId]);
@@ -87,15 +78,48 @@ class ShoppingCart {
 	public function getTotalAmount(){
 		$total = 0;
 		foreach($this->cart as $cartItem){
-			$total = ((int)$cartItem['Cost']*(int)$cartItem['quantity'])+$total;
+			$total = ((int)$cartItem['Cost']*(int)$cartItem['quantity'])+$total+$this->getMaterialCost($cartItem);
 		}
 		return $total;
 	}
-	public function getMaterialCost(){
-		return 0;
+	public function getIndividualTotalCost($cartItem){
+		$total = ((int)$cartItem['Cost']*(int)$cartItem['quantity'])+$this->getMaterialCost($cartItem);
+		return $total;
+	}
+	public function getMaterialCost($itemData){
+		$i = Array("mysql:host=localhost;dbname=art", "sadsquad", "sadsquad");
+		$pdo = DBHelper::createConnection($i);
+		$amount = 0;
+		if($itemData['matt'] == "none" || $itemData['matt'] == "[None]"){
+			
+		}else{
+			$amount += ($itemData['quantity']*10);
+		}
+		
+		if($itemData['frame'] == "none" || $itemData['frame'] == "[None]"){
+		}else{
+			$Frames = new FrameDB($pdo);
+			$framesamount = $Frames->findByID($itemData['frame'])->fetch();
+			$amount += ($framesamount['Price']*$itemData['quantity']);
+		}
+		
+		if($itemData['glass'] == "none" || $itemData['glass'] == "[None]"){
+		}else{
+			$Glass = new GlassDB($pdo);
+			$glasssamount = $Glass->findByID($itemData['glass'])->fetch();
+			$amount += ($glasssamount['Price']*$itemData['quantity']);
+		}
+		return $amount;
+	}
+	public function getTotalMaterialCost(){
+		$total = 0;
+		foreach($this->cart as $cartItem){
+		$total += $this->getMaterialCost($cartItem);
+		}
+		return $total;
 	}
 	public function getSubtotal(){
-		$subtotal = ($this->getTotalAmount()+$this->getMaterialCost());
+		$subtotal = ($this->getTotalAmount());
 		return $subtotal;
 	}
 	public function getTax(){
@@ -116,9 +140,28 @@ class ShoppingCart {
 		return $total;
 	}
 	public function getTotal(){
-		return ($this->getTotalAmount()+$this->getMaterialCost()+$this->getTax()+$this->getStandardShippingCosts());
+		return ($this->getTotalAmount()+$this->getTotalMaterialCost()+$this->getTax()+$this->getStandardShippingCosts());
 	}
 	
+	public function getOptions($row){
+		$return = "";
+		if($row['glass'] == "[None]"){
+			$return .= "";
+		}else{
+			$return .= 'Glass: '.$row['glass'].'<br>';
+		}
+		if($row['matt'] == "[None]"){
+			$return .= "";
+		}else{
+			$return .= 'Matt: '.$row['matt'].'<br>';
+		}
+		if($row['frame'] == "[None]"){
+			$return .= "";
+		}else{
+			$return .= 'Frame: '.$row['frame'].'<br>';
+		}
+		return $return;
+	}
 }
 
 ?>
