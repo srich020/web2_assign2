@@ -57,7 +57,12 @@ COMP 3512 Fall 2016
                             include 'classes/FavoritesList.class.php';
                             $favorites = new FavoritesList();
                             $count = count($favorites->getFavoriteArtists()) + count($favorites->getFavoritePaintings());
-                            
+                            if(isset($_GET['action'])){
+                                if($_GET['action']=="add"){
+                                     $count += 1;
+                                }
+                           
+                            }
                             echo ' (' . $count .')'  ?>
                     </a>        
                     <a class=" item" href='shopping-cart.php'>
