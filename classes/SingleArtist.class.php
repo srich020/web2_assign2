@@ -17,7 +17,11 @@ echo '<div class="ui hidden divider"></div>
 					<div class="ui items">
 						<div class="item">
 							<div class="image">	<img src="./images/art/artists/square-medium/'.$row["ArtistID"].'.jpg">
-								</div>
+								<br><a href="favorites-list.php?action=add&type=artist&id='.$row["ArtistID"].'">
+                                                <button class="ui right labeled icon button">
+                                                <i class="heart icon"></i>
+                                                Add to Favorites
+                                                </button></a></div>
 								<div class="content">
 									<div class="ui top attached tabular menu">
 										<a class="item active" data-tab="first">Life</a>

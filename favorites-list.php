@@ -21,7 +21,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {   
                 $favorites->addToFavoritePaintings($singlePainting);
-            } else if ($_GET['type'] == 'artist') {          
+            } else if ($_GET['type'] == 'artist') {     
+                $singleArtist=$artistdata->findByID($_GET['id'])->fetch();
                 $favorites->addToFavoriteArtists($singleArtist);
             }
         }
@@ -30,13 +31,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
         $id = $_GET['id'];
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {
-                echo "<script type='text/javascript'>alert('delete fav painting');</script>";
                 $favorites->deleteFavoritePainting($id);     //Delete 1 painting from list
             } else if ($_GET['type'] == 'artist') {
                 $favorites->deleteFavoriteArtist($id);       //Delete 1 artist from list
             }
         }
-    } else if (empty($_GET['id'])) {                       //----No specified ID---
+    } else if ($_GET['action'] == 'delete' && empty($_GET['id'])) {                       //----No specified ID---
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {             //Deletes all paintings from list
                 $favorites->clearAllPaintings();
@@ -48,33 +48,47 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
 }
 ?>
 <div class="ui hidden divider"></div>
-<div class='ui header'><h1>FAVORITES</h1></div>
+<div class="ui container grid">
+    <div class="five wide column"></div>
+    <div class="eight wide column">
+        <div class='ui header'><h1>FAVORITES</h1></div>
+    </div>
+    <div class="three wide column"></div>
+    
+        
+</div>
+
 <div class="ui divider"></div>
 <div class="ui container grid">
-    <div class="four wide column">
-        <h2 class="ui header">Artists</h2>
+    <div class='two wide column'></div>
+    <div class="six wide column">
+        <h2 class="ui header">Artists</h2>&nbsp;<a href='favorites-list.php?action=delete'>Clear List</a>
         <div class="ui hidden divider"></div> 
         <div class="ui divided items">
 
             <?php
             foreach ($favorites->getFavoriteArtists() as $artist) {
-                outputSinglePaintingRow($artist);
+                outputSingleArtistRow($artist);
             }
 
             function outputSingleArtistRow($singleArtist) {
                 $id = $singleArtist['ArtistID'];
+                
                 $row = '<div class="item">
                      <div class="ui tiny image">
                      <a href="single-artist.php?id='.$id.'">
-                 <img class="tiny image" src="images/art/artists/square-thumb/' . $id . '"></a>
+                 <img class="tiny image" src="images/art/artists/square-thumb/' . $id . '.jpg"></a>
                     
                     </div>
                 <div class="middle aligned content">
-                
+                 <a href="favorites-list.php?action=delete&type=artist&id='.$id.'">
+                         <button class="ui grey icon button"><i class="trash icon"></i></button></a> 
                  
                   <a href="single-artist.php?id='.$id.'">'. $singleArtist['FirstName'] . ' ' . $singleArtist['LastName'] . '</a>
                 </div>
               </div>';
+                echo $row;
+          
             }
             ?>
 
@@ -83,7 +97,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
 
 
         </div></div>
-    <div class="twelve wide column grid">
+    <div class="six wide column grid">
         <h2 class="ui header">Paintings</h2>
         <div class="ui hidden divider"></div> 
         <div class="ui divided items">
@@ -102,13 +116,16 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
                 
                 $thingy = '<div class="item">
                     <div class="ui tiny image">
-                      <img class="tiny image" src="images/art/works/square-small/'.$singlePainting['ImageFileName'] . '.jpg">
+                       <a href="single-painting.php?id='.$get.'">'
+                        . '<img class="tiny image" src="images/art/works/square-small/'.$singlePainting['ImageFileName'] . '.jpg"></a>
                     </div>
-                    <div class="meta"><a href="favorites-list.php?action=delete&type=painting&id='.$get.'">
-                         <button class="ui grey icon button"><i class="trash icon"></i>Remove</button></a></div>
+                    
                     <div class="middle aligned content">
+                    <a href="favorites-list.php?action=delete&type=painting&id='.$get.'">
+                         <button class="ui grey icon button"><i class="trash icon"></i></button></a> 
                       <a class="header" href="single-painting.php?id=' . $get .
-                        '">'.utf8_encode($singlePainting['Title']) .'</a>
+                        '">'.utf8_encode(  $singlePainting['Title']) .'</a>
+                              
                     </div>
                   </div>';
 
@@ -125,5 +142,6 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
 
 
     </div>
+    
 </div>
 

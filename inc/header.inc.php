@@ -27,22 +27,7 @@ COMP 3512 Fall 2016
            
         }
 
-        echo '<script type="text/javascript">
-        $(".orange.button").on("click", function(){
-           $.post("addToCart.php",{ num: 5 }, function(result) { 
-              alert("SUCK!!!");
-            });
-            
-        });
-        
     
-        
-        $(".right.button").on("click", function(){
-           $.post("addToCart.php",{ num: 5 }, function(result) { 
-               
-            });
-            
-        });</script>';
         ?>
 
         <link href="css/semantic.css" rel="stylesheet" >
@@ -67,7 +52,13 @@ COMP 3512 Fall 2016
                         </div>
                     </div>
                     <a class=" item" href='favorites-list.php'>
-                        <i class="heartbeat icon"></i> Favorites
+                        <i class="heartbeat icon"></i> Favorites 
+                            <?php 
+                            include 'classes/FavoritesList.class.php';
+                            $favorites = new FavoritesList();
+                            $count = count($favorites->getFavoriteArtists()) + count($favorites->getFavoritePaintings());
+                            
+                            echo ' (' . $count .')'  ?>
                     </a>        
                     <a class=" item" href='shopping-cart.php'>
                         <i class="shop icon"></i> Cart
