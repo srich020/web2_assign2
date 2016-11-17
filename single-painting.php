@@ -165,7 +165,7 @@ $reuse = new Reusable($pdo);
                                     <!-- Cart and Price -->
                                     <div class="ui segment">
                                         <div class="ui form">
-										<form action='shopping-cart.php' method='get'>
+										<form action='shopping-cart.php' method='get' id='material'>
                                             <div class="ui tiny statistic">
                                                 <div class="value">
                                                     <?php
@@ -181,19 +181,22 @@ $reuse = new Reusable($pdo);
 
                                             <?php
                                             echo
-                                            '<input type="hidden" name="id" value="'.$get.'">
+                                            '
+											
+											<input type="hidden" name="id" value="'.$get.'">
 											<input type="hidden" name="action" value="add">
-                                                <button class="ui labeled icon orange button">
+                                                <button type="submit" class="ui labeled icon orange button">
                                                     <i class="add to cart icon"></i>
                                                     Add to Cart
-                                                  </button></a>';
+                                                  </button>
+												  <form>';
                                                     
                                                     
-                                            echo '<a href="favorites-list.php?action=add&type=painting&id='.$get.'">
-                                                <button class="ui right labeled icon button">
+                                            echo '<button class="ui right labeled icon button">
+											<a href="favorites-list.php?action=add&type=painting&id='.$get.'">
                                                 <i class="heart icon"></i>
                                                 Add to Favorites
-                                                </button></a><form> ';        
+                                               </a> </button> ';        
                                             ?>
 
 

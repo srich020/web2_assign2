@@ -65,12 +65,12 @@ function makeCards($statement,$i){
 }
 	function makeFilter($table,$type){
 	$string = '<div class="four wide field"><label>'.$type.'</label>
-                                <select id="'.$type.'" class="ui search dropdown">
+                                <select id="'.$type.'" class="ui search dropdown" id="material" name="'.$type.'">
 								';
 	$sql = "SELECT Title from ".$table." ORDER BY ".$type."ID desc;";
 	$result = DBHelper::runQuery($this->connect,$sql,Array());
 			while($row=$result->fetch()){
-				  $string .='<option>'.utf8_encode($row["Title"]).'</option>';
+				  $string .='<option value="'.$row["Title"].'">'.utf8_encode($row["Title"]).'</option>';
 			}					
 								
          $string .='</select>

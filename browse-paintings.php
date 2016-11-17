@@ -96,7 +96,7 @@ $artists = new ArtistDB($pdo);
 			<div class="ui items">';
 			$browse = new BrowsePainting();
 			if(!isset($_GET)||empty($_GET)){
-				$statement = $paintings->joinWithOrderBy('Artists ON (Paintings.ArtistID = Artists.ArtistID)','YearOfWork DESC LIMIT 20');
+				$statement = $paintings->joinWithOrderBy('Artists ON (Paintings.ArtistID = Artists.ArtistID)','YearOfWork ASC LIMIT 20');
 				echo $browse->browsePaintings($statement);
 			}else if(isset($_GET["artist"]) && $_GET["artist"]!=0){
 				$statement = $paintings->findByIDandJoinWithKFieldOrder('* from Paintings','Artists ON (Paintings.ArtistID = Artists.ArtistID)','Paintings.ArtistID',$_GET["artist"],"YearOfWork ASC");

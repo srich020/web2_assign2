@@ -12,6 +12,8 @@ $cart = new ShoppingCart();
 //Functionality for adding a cart item
 if (isset($_GET['action']) && !empty($_GET['action'])) {
     if ($_GET['action'] == 'add' && !empty($_GET['id'])) {
+	
+		
         $paintingId = $_GET['id'];
 
         // get product details
@@ -20,17 +22,15 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         //was there a quantity entered?
         if (isset($_GET['quantity']) && !empty($_GET['quantity'])) {
             $itemData['quantity'] = $_GET['quantity'];
-        } else {
-            $itemData['quantity'] = 1;
+        } elseif(!isset($_GET['quantity'])){
+            $itemData['quantity'] += 1;
         }
-
-
         $cart->addToCart($itemData);
-    }elseif($_GET['action'] == 'delete' && !empty($_GET['id'])){
+		}elseif($_GET['action'] == 'delete' && !empty($_GET['id'])){
 		$cart->deleteShoppingItem($_GET['id']);
-		
-		
-	}
+		}elseif($_GET['action'] == 'update' && !empty($_GET['id']) && isset($_GET['quantity'])){
+		$cart->updateQuantity($_GET['quantity'],$_GET['id']);
+		}
 }
 ?>
 
@@ -41,6 +41,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         <div class="ui hidden divider"></div>
         <div class="ui items">
             <?php
+			
 			if(count($_SESSION['shoppingCart']) == 1){
 				echo "There are no items in your cart!";
 			}
@@ -58,36 +59,31 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 		<div class="content">
 			 <div class="ui segment">
                                         <div class="ui form">
-										<form action="shopping-cart.php" method="get">
                                             <div class="ui tiny statistic">
 					<a class="header" href="single-painting.php?id='.$row["PaintingID"].'">'.utf8_encode($row["Title"]).'</a>
                         </div>
                         <div class="four fields">
                             <div class="two wide field">
                                 <label>Quantity</label>
+								<form action="shopping-cart.php" id="update" method="get">
+								<input type="hidden" name="id" value="'.$row['PaintingID'].'">
+								<input type="hidden" name="action" value="update">
                                 <input type="number" name="quantity" value="'.$row['quantity'].'">
+							
                             </div><div class="three wide field"><label>Individual Cost</label>$'.number_format($row['Cost']).'
 									</div><div class="three wide field"><label>Material</label>$
                             </div><div class="three wide field"><label>Total Cost</label>$'.($row['Cost']*$row['quantity']).'
                             </div>                                                </div>                     
-                                            </form></div>
-			<div>
- 
-
-
-
-
-
-                                                
+</div>
+			<div>      
                                         </div>
-
-								<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
-								<a href="single-painting.php?id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="write icon"></i></button></a>
-			</div>
+<button type="submit" class="ui blue icon button" value="Submit">Update Cart</button>
+				</form>
+				<a href="shopping-cart.php?action=delete&id='.$row["PaintingID"].'"><button class="ui grey icon button"><i class="trash icon"></i></button></a>
+								<a href="single-painting.php?id='.$row["PaintingID"].'"><button class="ui orange icon button"><i class="write icon"></i></button></a></div>
 		</div>
 	</div>
-
-	<div class="ui divider"></div>';
+	<div class="ui hidden divider"></div>';
             }
 			
 			//BUFFER
@@ -97,28 +93,45 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         </div>
 
         </nav>            
-    </div> 
-    <div class="two wide column">	
+    </div> 	
+			<h4 class="ui horizontal divider header">
+  <i class="bar chart icon"></i>
+  Order Details
+</h4>
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td class="two wide column">Item Costs</td>
+      <td>$<?php echo $cart->getTotalAmount();?></td>
+    </tr>
+    <tr>
+      <td>Material</td>
+      <td>$<?php echo $cart->getMaterialCost();?></td>
+    </tr>
+	<tr>
+      <td>Subtotal</td>
+      <td>$<?php echo $cart->getSubtotal();?></td>
+    </tr>
+	<tr>
+      <td>Tax</td>
+      <td>$<?php echo $cart->getTax();?></td>
+    </tr>
+	<tr>
+      <td>Standard Shipping</td>
+      <td>$<?php echo $cart->getStandardShippingCosts();?></td>
+    </tr>
+    <tr>
+      <td>Express Shipping</td>
+      <td>$<?php echo $cart->getExpressShippingCosts();?></td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td>$<?php echo $cart->getTotal();?></td>
+    </tr>
+  </tbody>
+</table>
 
-        <div class="content" id="carttotal">
-            <table class="ui collapsing celled table">
-                <thead>
-                    <tr>
-                        <th colspan="3">Charge</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="totals"><td colspan="3">Base Costs</td><td colspan="2">$<?php echo $cart->getTotalAmount();?></td></tr>
-					<tr class="totals"><td colspan="3">Material</td><td colspan="2">$<?php echo $cart->getMaterialCost();?></td></tr>
-                    <tr class="totals"><td colspan="3">Subtotal</td><td colspan="2">$<?php echo $cart->getSubtotal();?></td></tr>
-                    <tr class="totals"><td colspan="3">Tax</td><td colspan="2">$<?php echo $cart->getTax();?></td></tr>
-                    <tr class="totals"><td colspan="3">Standard Shipping</td><td colspan="2">$<?php echo $cart->getStandardShippingCosts();?></td></tr>
-					<tr class="totals"><td colspan="3">Express Shipping</td><td colspan="2">$<?php echo $cart->getExpressShippingCosts();?></td></tr>
-                    <tr class="totals"><td colspan="3">Total</td><td colspan="2">$<?php echo $cart->getExpressShippingCosts();?></td></tr>
-                </tbody>
-            </table></div>
-
-    </div>
 </div></body></html>
+
+
 

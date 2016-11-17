@@ -29,12 +29,6 @@ class ShoppingCart {
         unset($this->cart['total']); //Extra record in list, needs unhooking
         return $this->cart;
     }
-	public function deleteFavoritePainting($paintingId) { //Removes a painting from list.
-        if (isset($this->favoritePaintings[$paintingId]) && !empty($this->favoritePaintings[$paintingId])) {
-            unset($this->favoritePaintings[$paintingId]);
-        }
-        $this->saveFavoritePaintings();
-    }
 
     public function getCartTotal() {
         return $this->cart['total'];
@@ -45,19 +39,14 @@ class ShoppingCart {
             return FALSE;
         } else {
             $id = $item["PaintingID"];
-
-
-          
             if (!isset($this->cart[$id])) {
                 $this->cart[$id] = $item;
                 $quantity = $_GET['quantity'];
+				$this->clearGlobal();
             } else {
-                $quantity = (int) $this->cart[$id]['quantity'];
+                $this->cart[$id]['quantity'] += $_GET['quantity'];
+				$this->clearGlobal();
             }
-
-            $item['quantity'] += $quantity;
-
-
             // save cart
             if ($this->saveAndUpdateCart()) {
                 return isset($rowid) ? $rowid : TRUE;
@@ -66,12 +55,21 @@ class ShoppingCart {
             }
         }
     }
+	private function clearGlobal(){
+		$_GET['quantity'] = null;
+		$_GET['id'] = null;
+		$_GET['action'] = null;
+	}
 	public function deleteShoppingItem($paintingId) { //Removes an artist from list.
         if (isset($this->cart[$paintingId]) && !empty($this->cart[$paintingId])) {
             unset($this->cart[$paintingId]);
         }
         $this->saveAndUpdateCart();
     }
+	public function updateQuantity($number,$id){
+		$this->cart[$id]['quantity'] = $number;
+		$this->saveAndUpdateCart();
+	}
 
     protected function saveAndUpdateCart() {
 
@@ -118,7 +116,7 @@ class ShoppingCart {
 		return $total;
 	}
 	public function getTotal(){
-		return 0;
+		return ($this->getTotalAmount()+$this->getMaterialCost()+$this->getTax()+$this->getStandardShippingCosts());
 	}
 	
 }
