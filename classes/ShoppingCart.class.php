@@ -150,7 +150,7 @@ class ShoppingCart {
 		foreach($this->cart as $cartItem){
 			$total = ((int)$cartItem['quantity']*25)+$total;
 		}
-		if($this->getSubtotal() < 1500){
+		if($this->getSubtotal() <= 1500){
 		return $total;
 		}else{
 			return 0;
@@ -161,7 +161,7 @@ class ShoppingCart {
 		foreach($this->cart as $cartItem){
 			$total = ((int)$cartItem['quantity']*50)+$total;
 		}
-		if($this->getSubtotal() < 2500){
+		if($this->getSubtotal() <= 2500){
 		return $total;
 		}else{
 			return 0;
