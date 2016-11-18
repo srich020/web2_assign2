@@ -88,21 +88,21 @@ class FavoritesList {
         if (isset($this->favoritePaintings)) {
             $this->favoritePaintings = array();
         }
-        saveFavoritePaintings();
+         $this->saveFavoritePaintings();
     }
 
     public function clearAllArtists() {                //Removes all paintings.
         if (isset($this->favoriteArtists)) {
             $this->favoriteArtists = array();
         }
-        saveFavoriteArtists();
+         $this->saveFavoriteArtists();
     }
 
-    protected function saveFavoritePaintings() {        //Saves the Paintings list to session.
+    public function saveFavoritePaintings() {        //Saves the Paintings list to session.
         $_SESSION['favoritePaintings'] = $this->favoritePaintings;
     }
 
-    protected function saveFavoriteArtists() {           //Saves the Artists list to session.
+    public function saveFavoriteArtists() {           //Saves the Artists list to session.
         $_SESSION['favoriteArtists'] = $this->favoriteArtists;
     }
 

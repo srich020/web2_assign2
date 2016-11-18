@@ -15,19 +15,15 @@ COMP 3512 Fall 2016
         <script src="css/semantic.js"></script>
         <script src="js/misc.js"></script>
         <?php
-        
         $cart;
         $favorites;
-        
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         } else {
-           $cart = new ShoppingCart();
-           $favorites = new FavoritesList();
-           
+            $cart = new ShoppingCart();
+            $favorites = new FavoritesList();
         }
-
-    
         ?>
 
         <link href="css/semantic.css" rel="stylesheet" >
@@ -53,20 +49,61 @@ COMP 3512 Fall 2016
                     </div>
                     <a class=" item" href='favorites-list.php'>
                         <i class="heartbeat icon"></i> Favorites 
-                            <?php 
-                            include 'classes/FavoritesList.class.php';
-                            $favorites = new FavoritesList();
-                            $count = count($favorites->getFavoriteArtists()) + count($favorites->getFavoritePaintings());
-                            if(isset($_GET['action'])){
-                                if($_GET['action']=="add"){
-                                     $count += 1;
+                        <?php
+                        include 'classes/FavoritesList.class.php';
+                        $favorites = new FavoritesList();
+                        $count = count($favorites->getFavoriteArtists()) + count($favorites->getFavoritePaintings());
+
+
+                        if (strtok($_SERVER['REQUEST_URI'], "?") == '/assign2_SADSquad/favorites-list.php') {
+
+                            if (isset($_GET['action']) && !isset($_GET['quantity'])) {
+                                if ($_GET['action'] == "add") {
+                                    $count += 1;
+                                } else if ($_GET['action'] == "delete" && !isset($_GET['id'])) {
+                                    $count = 0;
+                                } else if ($_GET['action'] == "delete" && isset($_GET['id'])) {
+                                    $count -= 1;
                                 }
-                           
                             }
-                            echo ' (' . $count .')'  ?>
+                        }
+
+                        echo ' (' . $count . ')'
+                        ?>
                     </a>        
                     <a class=" item" href='shopping-cart.php'>
-                        <i class="shop icon"></i> Cart
+                        <i class="shop icon"></i> Cart <?php
+                        include 'classes/ShoppingCart.class.php';
+                        $cart = new ShoppingCart();
+                        $cartCount = 0;
+                        foreach ($cart->getCart() as $cartItem) {
+                            $cartCount += $cartItem['quantity'];
+                        }
+
+                        if (strtok($_SERVER['REQUEST_URI'], "?") == '/assign2_SADSquad/shopping-cart.php') {
+                            if (isset($_GET['action'])) {
+                                if ($_GET['action'] == "add") {
+                                    if (isset($_GET['quantity']) && !isset($_GET['type'])) {
+                                        $cartCount += $_GET['quantity'];
+                                    } else {
+                                        if (!isset($_GET['type'])) {
+                                            $cartCount += 1;
+                                        }
+                                    }
+                                } else if ($_GET['action'] == "delete" && !isset($_GET['id']) ) {
+                                    $cartCount = 0;
+                                } else if ($_GET['action'] == "delete" && isset($_GET['id'])) {
+                                    $cartCount -= 1;
+                                } else if ($_GET['action'] == "clearAll") {
+                                    $cartCount = 0;
+                                }
+                            }
+                        }
+
+
+
+                        echo ' (' . $cartCount . ')'
+                        ?>
                     </a>                                     
                 </nav>            
             </div>     
@@ -104,15 +141,15 @@ COMP 3512 Fall 2016
                             <input type="text" placeholder="Search ..." name="search">
                             <button type="submit" value="Search"> <i class="search icon"></i>
                         </form>
-                       </div>
+                    </div>
                 </div>      
 
             </div>
         </div>   
 
-           
-    
-    
 
 
-</header> 
+
+
+
+    </header> 

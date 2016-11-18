@@ -62,7 +62,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
 <div class="ui container grid">
     <div class='two wide column'></div>
     <div class="six wide column">
-        <h2 class="ui header">Artists</h2>&nbsp;<a href='favorites-list.php?action=delete'>Clear List</a>
+        <h2 class="ui header">Artists</h2>&nbsp;<a href='favorites-list.php?action=delete&type=artist'>Clear List</a>
         <div class="ui hidden divider"></div> 
         <div class="ui divided items">
 
@@ -84,7 +84,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
                  <a href="favorites-list.php?action=delete&type=artist&id='.$id.'">
                          <button class="ui grey icon button"><i class="trash icon"></i></button></a> 
                  
-                  <a href="single-artist.php?id='.$id.'">'. $singleArtist['FirstName'] . ' ' . $singleArtist['LastName'] . '</a>
+                  <a href="single-artist.php?id='.$id.'">'. utf8_encode($singleArtist['FirstName']) . ' ' . utf8_encode($singleArtist['LastName']) . '</a>
                 </div>
               </div>';
                 echo $row;
@@ -98,7 +98,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
 
         </div></div>
     <div class="six wide column grid">
-        <h2 class="ui header">Paintings</h2>
+        <h2 class="ui header">Paintings</h2>&nbsp;<a href='favorites-list.php?action=delete&type=painting'>Clear List</a>
         <div class="ui hidden divider"></div> 
         <div class="ui divided items">
 
