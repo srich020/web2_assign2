@@ -33,6 +33,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 		$cart->deleteShoppingItem($_GET['id']);
 		}elseif($_GET['action'] == 'update' && !empty($_GET['id']) && isset($_GET['quantity'])){
 		$cart->updateQuantity($_GET['quantity'],$_GET['id']);
+		}elseif($_GET['action'] == 'clearall'){
+		$cart->deleteCart();
 		}
 }
 ?>
@@ -46,7 +48,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         <div class="ui items">
             <?php
 			
-			if(count($_SESSION['shoppingCart']) == 1){
+			if(count($_SESSION['shoppingCart'])==1){
 				echo "There are no items in your cart!";
 			}
             
@@ -94,8 +96,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 	<div class="ui hidden divider"></div>';
             }
 			
-			//BUFFER
-			//<div class="description">Individual Cost: $'.number_format($row["Cost"]).'<br>Total Cost: $'.($row['Cost']*$row['quantity']).'</div>
+			
             ?>
 
         </div>
@@ -104,9 +105,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
     </div> 	
 			<h4 class="ui horizontal divider header">
   <i class="bar chart icon"></i>
-  Order Details
+  Order Details</h4>
+  
 
-</h4>
+	<a href="#"> <button class="ui labeled icon orange link button"> <i class="add to cart icon"></i> Checkout </button></a>
+    <a href="shopping-cart.php?action=clearall"><button class="ui labeled icon grey button"><i class="trash icon"></i>Clear Shopping Cart</button></a>
+
 												 
 
 <table class="ui definition table">

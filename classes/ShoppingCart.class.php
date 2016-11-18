@@ -41,6 +41,7 @@ class ShoppingCart {
             if (!isset($this->cart[$id])) {
                 $this->cart[$id] = $item;
             }else{
+				$this->cart[$id]['quantity'] = isset($_GET['quantity']) ? $_GET['quantity'] : 1;
 				$this->cart[$id]['frame'] = isset($_GET['Frame']) ? $_GET['Frame'] : 'none';
 				$this->cart[$id]['glass'] = isset($_GET['Glass']) ? $_GET['Glass'] : 'none';
 				$this->cart[$id]['matt'] = isset($_GET['Matt']) ? $_GET['Matt'] : 'none';
@@ -59,6 +60,10 @@ class ShoppingCart {
         }
         $this->saveAndUpdateCart();
     }
+	public function deleteCart(){
+		    $this->cart = array('total' => 0);
+            $this->saveAndUpdateCart();
+	}
 	public function updateQuantity($number,$id){
 		$this->cart[$id]['quantity'] = $number;
 		$this->saveAndUpdateCart();
