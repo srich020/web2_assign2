@@ -29,12 +29,16 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 		$itemData['glass'] = isset($_GET['Glass']) ? $_GET['Glass'] : 'none';
 		$itemData['matt'] = isset($_GET['Matt']) ? $_GET['Matt'] : 'none';
         $cart->addToCart($itemData);
+        header("Location: http://localhost/assign2_SADSquad/shopping-cart.php");
 		}elseif($_GET['action'] == 'delete' && !empty($_GET['id'])){
 		$cart->deleteShoppingItem($_GET['id']);
+                header("Location: http://localhost/assign2_SADSquad/shopping-cart.php");
 		}elseif($_GET['action'] == 'update' && !empty($_GET['id']) && isset($_GET['quantity'])){
 		$cart->updateQuantity($_GET['quantity'],$_GET['id']);
+                header("Location: http://localhost/assign2_SADSquad/shopping-cart.php");
 		}elseif($_GET['action'] == 'clearall'){
 		$cart->deleteCart();
+                header("Location: http://localhost/assign2_SADSquad/shopping-cart.php");
 		}
 }
 ?>

@@ -21,9 +21,11 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {   
                 $favorites->addToFavoritePaintings($singlePainting);
+                header("Location: http://localhost/assign2_SADSquad/favorites-list.php");
             } else if ($_GET['type'] == 'artist') {     
                 $singleArtist=$artistdata->findByID($_GET['id'])->fetch();
                 $favorites->addToFavoriteArtists($singleArtist);
+                header("Location: http://localhost/assign2_SADSquad/favorites-list.php");
             }
         }
     }                                                         //'DELETE' ACTIONS
@@ -32,16 +34,24 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {
                 $favorites->deleteFavoritePainting($id);     //Delete 1 painting from list
+                
+                header("Location: http://localhost/assign2_SADSquad/favorites-list.php");
             } else if ($_GET['type'] == 'artist') {
                 $favorites->deleteFavoriteArtist($id);       //Delete 1 artist from list
+                
+                header("Location: http://localhost/assign2_SADSquad/favorites-list.php");
             }
         }
     } else if ($_GET['action'] == 'delete' && empty($_GET['id'])) {                       //----No specified ID---
         if (isset($_GET['type'])) {
             if ($_GET['type'] == 'painting') {             //Deletes all paintings from list
                 $favorites->clearAllPaintings();
+                
+                header("Location: http://localhost/assign2_SADSquad/favorites-list.php");
             } else if ($_GET['type'] == 'artist') {
                 $favorites->clearAllArtists();             //Deletes all artists from list
+                
+                header("Location: http://localhost/assign2_SADSquad/favorites-list.php");
             }
         }
     }
@@ -117,7 +127,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
                 $thingy = '<div class="item">
                     <div class="ui tiny image">
                        <a href="single-painting.php?id='.$get.'">'
-                        . '<img class="tiny image" src="images/art/works/square-small/'.$singlePainting['ImageFileName'] . '.jpg"></a>
+                        . '<img class="small image" src="images/art/works/square-small/'.$singlePainting['ImageFileName'] . '.jpg"></a>
                     </div>
                     
                     <div class="middle aligned content">
