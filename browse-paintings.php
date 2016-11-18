@@ -82,8 +82,8 @@ $artists = new ArtistDB($pdo);
 				$result = $museum->findByIDOrder($_GET["museum"],"GalleryName");
 				$row=$result->fetch();
 				echo '<p><b>MUSEUM = '.$row["GalleryName"].'</b></p>';
-			}else{
-				echo '';
+			}elseif(isset($_GET["search"]) && !empty($_GET["search"])){
+				echo '<p><b>Search Term = "'.$_GET["search"].'"</b></p>';
 			}
 			// if(isset($_GET["artist"]) && $_GET["artist"]!=0){
 				// $result = $artists->findByID($_GET["artist"]);
