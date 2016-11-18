@@ -181,9 +181,7 @@ $reuse = new Reusable($pdo);
 
                                             <?php
                                             echo
-                                            '
-											
-											<input type="hidden" name="id" value="'.$get.'">
+                                            '<input type="hidden" name="id" value="'.$get.'">
 											<input type="hidden" name="action" value="add">
                                                 <button type="submit" class="ui labeled icon orange button">
                                                     <i class="add to cart icon"></i>
@@ -191,19 +189,11 @@ $reuse = new Reusable($pdo);
                                                   </button>
 												  </form>';
                                                     
-                                                    
-<<<<<<< HEAD
-                                            echo '<form action="favorites-list.php?action=add&type=painting&id='.$get.'">
+
+                                            echo '<a href="favorites-list.php?action=add&type=painting&id='.$get.'">
 											<button type="submit "class="ui right labeled icon button"> <i class="heart icon"></i>
-                                                Add to Favorites</button> 
-                                               ';        
-=======
-                                            echo '<button class="ui right labeled icon button">
-											<a href="favorites-list.php?action=add&type=painting&id='.$get.'">
-                                                <i class="heart icon"></i>
-                                                Add to Favorites
-                                               </a> </button> ';        
->>>>>>> f2aaf7b1422164ffca3cbf2661509a35df7cd1ed
+                                                Add to Favorites</button> </a>  ';            
+
                                             ?>
 
 
