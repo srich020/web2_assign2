@@ -187,13 +187,13 @@ $reuse = new Reusable($pdo);
                                                     <i class="add to cart icon"></i>
                                                     Add to Cart
                                                   </button>
-												  <form>';
+												  </form>';
                                                     
                                                     
-                                            echo '<a href="favorites-list.php?action=add&type=painting&id='.$get.'">
-											<button class="ui right labeled icon button"> <i class="heart icon"></i>
+                                            echo '<form action="favorites-list.php?action=add&type=painting&id='.$get.'">
+											<button type="submit "class="ui right labeled icon button"> <i class="heart icon"></i>
                                                 Add to Favorites</button> 
-                                               </a> ';        
+                                               ';        
                                             ?>
 
 
