@@ -144,7 +144,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
   </tbody>
 </table>
 
-</div></body></html>
+</div></body>
+
+
+<?php include "./inc/footer.inc.php"; ?>
+
+</html>
 
 
 

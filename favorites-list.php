@@ -144,4 +144,4 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {   // CHECK FOR ACTIONS
     </div>
     
 </div>
-
+<?php include "./inc/footer.inc.php"; ?>
