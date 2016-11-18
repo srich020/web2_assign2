@@ -109,6 +109,7 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
   
 
 	<a href="#"> <button class="ui labeled icon red link button"> <i class="add to cart icon"></i> Checkout </button></a>
+	 <a href="index.php"><button class="ui labeled icon green button"><i class="play icon"></i>Continue Shopping</button></a>
     <a href="shopping-cart.php?action=clearall"><button class="ui labeled icon grey button"><i class="trash icon"></i>Clear Shopping Cart</button></a>
 	 <a href="shopping-cart.php?action=standard"><button class="ui labeled icon orange button"><i class="send icon"></i>Standard Shipping</button></a>
 	  <a href="shopping-cart.php?action=express"><button class="ui labeled icon orange button"><i class="send icon"></i>Express Shipping</button></a>
