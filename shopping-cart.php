@@ -108,8 +108,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
   Order Details</h4>
   
 
-	<a href="#"> <button class="ui labeled icon orange link button"> <i class="add to cart icon"></i> Checkout </button></a>
+	<a href="#"> <button class="ui labeled icon red link button"> <i class="add to cart icon"></i> Checkout </button></a>
     <a href="shopping-cart.php?action=clearall"><button class="ui labeled icon grey button"><i class="trash icon"></i>Clear Shopping Cart</button></a>
+	 <a href="shopping-cart.php?action=standard"><button class="ui labeled icon orange button"><i class="send icon"></i>Standard Shipping</button></a>
+	  <a href="shopping-cart.php?action=express"><button class="ui labeled icon orange button"><i class="send icon"></i>Express Shipping</button></a>
 
 												 
 
@@ -132,12 +134,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       <td>$<?php echo $cart->getTax();?></td>
     </tr>
 	<tr>
-      <td>Standard Shipping</td>
-      <td>$<?php echo $cart->getStandardShippingCosts();?></td>
-    </tr>
-    <tr>
-      <td>Express Shipping</td>
-      <td>$<?php echo $cart->getExpressShippingCosts();?></td>
+      <td>Shipping</td>
+      <td>$<?php echo $cart->getShippingCosts();?></td>
     </tr>
     <tr>
       <td>Total</td>

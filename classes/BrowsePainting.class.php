@@ -6,9 +6,7 @@
 //--------Browse Paintings Function PHP Page----------
 class BrowsePainting{
 function browsePaintings($result){
-	// $painting = new PaintingDB($pdo);
 $toReturn = "";
-	// $result = $pdo->query($query);
 while($row=$result->fetch()){
 	$toReturn.= '
 <div class="item">
@@ -27,9 +25,14 @@ while($row=$result->fetch()){
 
 			</div>
 			<div>
-				<div class="ui hidden divider"></div>
-				<a href="shopping-cart.php?action=add&id='.$row["PaintingID"].'&quantity=1"><button class="ui orange icon button"><i class="shop icon"></i></button></a>
-	<a href="favorites-list.php?action=add&type=painting&id='.$row["PaintingID"].'"><button class="ui icon button"><i class="heart icon"></i></button></a>
+				<div class="ui hidden divider"></div>';
+				if(isset($_SESSION['shoppingCart'][$row['PaintingID']])){
+				$toReturn .= '<a href="shopping-cart.php"><button class="ui right labeled orange icon button"> <i class="cart icon"></i>View Cart</button></a>';
+				}else{
+				$toReturn .= '<a href="shopping-cart.php?action=add&id='.$row["PaintingID"].'&quantity=1"><button class="ui orange icon button"><i class="shop icon"></i></button></a>';
+				}
+				
+			$toReturn .= '<a href="favorites-list.php?action=add&type=painting&id='.$row["PaintingID"].'"><button class="ui icon button"><i class="heart icon"></i></button></a>
 			</div>
 		</div>
 	</div>

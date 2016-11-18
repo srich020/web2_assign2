@@ -133,12 +133,24 @@ class ShoppingCart {
 	public function getTax(){
 		return $this->getSubtotal()*0.05;
 	}
+	public function getShippingCosts(){
+		$total = 0;
+		if(isset($_GET['action']) && $_GET['action'] == 'express'){
+			$total += $this->getExpressShippingCosts();
+		}elseif(isset($_GET['action']) && $_GET['action'] == 'standard'){
+			$total += $this->getStandardShippingCosts();
+		}else{
+			$total += $this->getStandardShippingCosts();
+		}
+		return $total;
+	}
+	
 	public function getStandardShippingCosts(){
 		$total = 0;
 		foreach($this->cart as $cartItem){
 			$total = ((int)$cartItem['quantity']*25)+$total;
 		}
-		if($total < 1500){
+		if($this->getSubtotal() < 1500){
 		return $total;
 		}else{
 			return 0;
@@ -149,7 +161,7 @@ class ShoppingCart {
 		foreach($this->cart as $cartItem){
 			$total = ((int)$cartItem['quantity']*50)+$total;
 		}
-		if($total < 2500){
+		if($this->getSubtotal() < 2500){
 		return $total;
 		}else{
 			return 0;
